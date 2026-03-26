@@ -8,7 +8,7 @@ if(LOCAL_DEV)
 endif()
               
 project(tgbot-lib
-    VERSION 1.0.4
+    VERSION 1.0.5
     LANGUAGES CXX
     DESCRIPTION "Telegram Bot API C++ models"
 )
@@ -28,7 +28,7 @@ else()
     message("Couldn't find OpenSSL!")
 endif()
 
-pkg_check_modules(test REQUIRED IMPORTED_TARGET libcoro)
+pkg_check_modules(libcoro REQUIRED IMPORTED_TARGET libcoro)
 find_package(httplib)
 find_package(nlohmann_json)
 
@@ -973,12 +973,22 @@ target_include_directories(tgbot-lib
         $<INSTALL_INTERFACE:include>
 )
 
+if(APPLE)
+    message("Found MACOS")
+    target_link_libraries(tgbot-lib
+        PUBLIC
+            "-framework CoreFoundation"
+            "-framework CFNetwork"
+            "-framework Security"
+    )
+endif()
+
 target_link_libraries(tgbot-lib
     PUBLIC
         nlohmann_json::nlohmann_json
         OpenSSL::SSL
         OpenSSL::Crypto
-        libcoro
+        PkgConfig::libcoro
         httplib::httplib
 )
 # Install rules (optional)
