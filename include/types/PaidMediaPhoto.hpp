@@ -7,8 +7,8 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/PaidMedia.hpp"
-#include "types/PhotoSize.hpp"
+#include <tgbot/types/PaidMedia.hpp>
+#include <tgbot/types/PhotoSize.hpp>
 
 namespace TgBot {
 

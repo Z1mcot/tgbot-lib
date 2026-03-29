@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/MaskPosition.hpp"
+#include <tgbot/types/MaskPosition.hpp>
 
 namespace TgBot {
 

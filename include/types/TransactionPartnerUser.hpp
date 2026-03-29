@@ -7,11 +7,11 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/TransactionPartner.hpp"
-#include "types/PaidMedia.hpp"
-#include "types/User.hpp"
-#include "types/AffiliateInfo.hpp"
-#include "types/Gift.hpp"
+#include <tgbot/types/TransactionPartner.hpp>
+#include <tgbot/types/PaidMedia.hpp>
+#include <tgbot/types/User.hpp>
+#include <tgbot/types/AffiliateInfo.hpp>
+#include <tgbot/types/Gift.hpp>
 
 namespace TgBot {
 

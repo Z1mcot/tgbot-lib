@@ -7,8 +7,8 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/StoryAreaType.hpp"
-#include "types/ReactionType.hpp"
+#include <tgbot/types/StoryAreaType.hpp>
+#include <tgbot/types/ReactionType.hpp>
 
 namespace TgBot {
 

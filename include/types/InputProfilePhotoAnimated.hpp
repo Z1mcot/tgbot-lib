@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/InputProfilePhoto.hpp"
+#include <tgbot/types/InputProfilePhoto.hpp>
 
 namespace TgBot {
 

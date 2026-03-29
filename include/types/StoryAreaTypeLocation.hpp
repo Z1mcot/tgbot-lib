@@ -7,8 +7,8 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/StoryAreaType.hpp"
-#include "types/LocationAddress.hpp"
+#include <tgbot/types/StoryAreaType.hpp>
+#include <tgbot/types/LocationAddress.hpp>
 
 namespace TgBot {
 

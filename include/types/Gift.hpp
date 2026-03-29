@@ -7,10 +7,10 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/TelegramModel.hpp"
-#include "types/Sticker.hpp"
-#include "types/GiftBackground.hpp"
-#include "types/Chat.hpp"
+#include <tgbot/types/TelegramModel.hpp>
+#include <tgbot/types/Sticker.hpp>
+#include <tgbot/types/GiftBackground.hpp>
+#include <tgbot/types/Chat.hpp>
 
 namespace TgBot {
 

@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/BotCommandScope.hpp"
+#include <tgbot/types/BotCommandScope.hpp>
 
 namespace TgBot {
 

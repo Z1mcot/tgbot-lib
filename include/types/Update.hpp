@@ -7,24 +7,24 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/TelegramModel.hpp"
-#include "types/Message.hpp"
-#include "types/BusinessConnection.hpp"
-#include "types/BusinessMessagesDeleted.hpp"
-#include "types/MessageReactionUpdated.hpp"
-#include "types/MessageReactionCountUpdated.hpp"
-#include "types/InlineQuery.hpp"
-#include "types/ChosenInlineResult.hpp"
-#include "types/CallbackQuery.hpp"
-#include "types/ShippingQuery.hpp"
-#include "types/PreCheckoutQuery.hpp"
-#include "types/PaidMediaPurchased.hpp"
-#include "types/Poll.hpp"
-#include "types/PollAnswer.hpp"
-#include "types/ChatMemberUpdated.hpp"
-#include "types/ChatJoinRequest.hpp"
-#include "types/ChatBoostUpdated.hpp"
-#include "types/ChatBoostRemoved.hpp"
+#include <tgbot/types/TelegramModel.hpp>
+#include <tgbot/types/Message.hpp>
+#include <tgbot/types/BusinessConnection.hpp>
+#include <tgbot/types/BusinessMessagesDeleted.hpp>
+#include <tgbot/types/MessageReactionUpdated.hpp>
+#include <tgbot/types/MessageReactionCountUpdated.hpp>
+#include <tgbot/types/InlineQuery.hpp>
+#include <tgbot/types/ChosenInlineResult.hpp>
+#include <tgbot/types/CallbackQuery.hpp>
+#include <tgbot/types/ShippingQuery.hpp>
+#include <tgbot/types/PreCheckoutQuery.hpp>
+#include <tgbot/types/PaidMediaPurchased.hpp>
+#include <tgbot/types/Poll.hpp>
+#include <tgbot/types/PollAnswer.hpp>
+#include <tgbot/types/ChatMemberUpdated.hpp>
+#include <tgbot/types/ChatJoinRequest.hpp>
+#include <tgbot/types/ChatBoostUpdated.hpp>
+#include <tgbot/types/ChatBoostRemoved.hpp>
 
 namespace TgBot {
 

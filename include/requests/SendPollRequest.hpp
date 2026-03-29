@@ -7,10 +7,10 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/InputPollOption.hpp"
-#include "types/MessageEntity.hpp"
-#include "types/ReplyParameters.hpp"
-#include "types/KeyboardOption.hpp"
+#include <tgbot/types/InputPollOption.hpp>
+#include <tgbot/types/MessageEntity.hpp>
+#include <tgbot/types/ReplyParameters.hpp>
+#include <tgbot/types/KeyboardOption.hpp>
 
 namespace TgBot {
 

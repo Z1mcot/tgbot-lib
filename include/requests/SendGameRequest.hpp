@@ -7,8 +7,8 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/ReplyParameters.hpp"
-#include "types/InlineKeyboardMarkup.hpp"
+#include <tgbot/types/ReplyParameters.hpp>
+#include <tgbot/types/InlineKeyboardMarkup.hpp>
 
 namespace TgBot {
 

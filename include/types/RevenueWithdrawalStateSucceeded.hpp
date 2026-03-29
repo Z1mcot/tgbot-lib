@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/RevenueWithdrawalState.hpp"
+#include <tgbot/types/RevenueWithdrawalState.hpp>
 
 namespace TgBot {
 

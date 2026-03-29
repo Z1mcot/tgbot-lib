@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/InputSticker.hpp"
+#include <tgbot/types/InputSticker.hpp>
 
 namespace TgBot {
 

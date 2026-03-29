@@ -7,10 +7,10 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/InlineQueryResult.hpp"
-#include "types/MessageEntity.hpp"
-#include "types/InlineKeyboardMarkup.hpp"
-#include "types/InputMessageContent.hpp"
+#include <tgbot/types/InlineQueryResult.hpp>
+#include <tgbot/types/MessageEntity.hpp>
+#include <tgbot/types/InlineKeyboardMarkup.hpp>
+#include <tgbot/types/InputMessageContent.hpp>
 
 namespace TgBot {
 

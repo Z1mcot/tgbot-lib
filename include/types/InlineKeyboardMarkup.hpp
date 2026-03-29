@@ -7,8 +7,8 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/KeyboardOption.hpp"
-#include "types/InlineKeyboardButton.hpp"
+#include <tgbot/types/KeyboardOption.hpp>
+#include <tgbot/types/InlineKeyboardButton.hpp>
 
 namespace TgBot {
 

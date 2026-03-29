@@ -7,8 +7,8 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/MaybeInaccessibleMessage.hpp"
-#include "types/Chat.hpp"
+#include <tgbot/types/MaybeInaccessibleMessage.hpp>
+#include <tgbot/types/Chat.hpp>
 
 namespace TgBot {
 

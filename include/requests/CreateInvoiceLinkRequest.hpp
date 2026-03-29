@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/LabeledPrice.hpp"
+#include <tgbot/types/LabeledPrice.hpp>
 
 namespace TgBot {
 

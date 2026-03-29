@@ -7,11 +7,11 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/MessageEntity.hpp"
-#include "types/LinkPreviewOptions.hpp"
-#include "types/SuggestedPostParameters.hpp"
-#include "types/ReplyParameters.hpp"
-#include "types/KeyboardOption.hpp"
+#include <tgbot/types/MessageEntity.hpp>
+#include <tgbot/types/LinkPreviewOptions.hpp>
+#include <tgbot/types/SuggestedPostParameters.hpp>
+#include <tgbot/types/ReplyParameters.hpp>
+#include <tgbot/types/KeyboardOption.hpp>
 
 namespace TgBot {
 

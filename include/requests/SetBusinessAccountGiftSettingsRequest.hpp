@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/AcceptedGiftTypes.hpp"
+#include <tgbot/types/AcceptedGiftTypes.hpp>
 
 namespace TgBot {
 

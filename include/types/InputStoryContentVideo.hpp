@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/InputStoryContent.hpp"
+#include <tgbot/types/InputStoryContent.hpp>
 
 namespace TgBot {
 

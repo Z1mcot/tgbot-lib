@@ -7,8 +7,8 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/MenuButton.hpp"
-#include "types/WebAppInfo.hpp"
+#include <tgbot/types/MenuButton.hpp>
+#include <tgbot/types/WebAppInfo.hpp>
 
 namespace TgBot {
 

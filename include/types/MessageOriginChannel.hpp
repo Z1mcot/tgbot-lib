@@ -7,8 +7,8 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/MessageOrigin.hpp"
-#include "types/Chat.hpp"
+#include <tgbot/types/MessageOrigin.hpp>
+#include <tgbot/types/Chat.hpp>
 
 namespace TgBot {
 

@@ -7,10 +7,10 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/OwnedGift.hpp"
-#include "types/MessageEntity.hpp"
-#include "types/Gift.hpp"
-#include "types/User.hpp"
+#include <tgbot/types/OwnedGift.hpp>
+#include <tgbot/types/MessageEntity.hpp>
+#include <tgbot/types/Gift.hpp>
+#include <tgbot/types/User.hpp>
 
 namespace TgBot {
 

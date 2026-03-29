@@ -7,8 +7,8 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/TelegramModel.hpp"
-#include "types/Gift.hpp"
+#include <tgbot/types/TelegramModel.hpp>
+#include <tgbot/types/Gift.hpp>
 
 namespace TgBot {
 

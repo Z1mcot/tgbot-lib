@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/ChatAdministratorRights.hpp"
+#include <tgbot/types/ChatAdministratorRights.hpp>
 
 namespace TgBot {
 

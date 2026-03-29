@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/TransactionPartner.hpp"
+#include <tgbot/types/TransactionPartner.hpp>
 
 namespace TgBot {
 

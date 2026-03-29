@@ -7,9 +7,9 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/TelegramModel.hpp"
-#include "types/PhotoSize.hpp"
-#include "types/VideoQuality.hpp"
+#include <tgbot/types/TelegramModel.hpp>
+#include <tgbot/types/PhotoSize.hpp>
+#include <tgbot/types/VideoQuality.hpp>
 
 namespace TgBot {
 

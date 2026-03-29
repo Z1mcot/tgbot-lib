@@ -7,21 +7,21 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/TelegramModel.hpp"
-#include "types/ReactionType.hpp"
-#include "types/AcceptedGiftTypes.hpp"
-#include "types/ChatPhoto.hpp"
-#include "types/Birthdate.hpp"
-#include "types/BusinessIntro.hpp"
-#include "types/BusinessLocation.hpp"
-#include "types/BusinessOpeningHours.hpp"
-#include "types/Chat.hpp"
-#include "types/Message.hpp"
-#include "types/ChatPermissions.hpp"
-#include "types/ChatLocation.hpp"
-#include "types/UserRating.hpp"
-#include "types/Audio.hpp"
-#include "types/UniqueGiftColors.hpp"
+#include <tgbot/types/TelegramModel.hpp>
+#include <tgbot/types/ReactionType.hpp>
+#include <tgbot/types/AcceptedGiftTypes.hpp>
+#include <tgbot/types/ChatPhoto.hpp>
+#include <tgbot/types/Birthdate.hpp>
+#include <tgbot/types/BusinessIntro.hpp>
+#include <tgbot/types/BusinessLocation.hpp>
+#include <tgbot/types/BusinessOpeningHours.hpp>
+#include <tgbot/types/Chat.hpp>
+#include <tgbot/types/Message.hpp>
+#include <tgbot/types/ChatPermissions.hpp>
+#include <tgbot/types/ChatLocation.hpp>
+#include <tgbot/types/UserRating.hpp>
+#include <tgbot/types/Audio.hpp>
+#include <tgbot/types/UniqueGiftColors.hpp>
 
 namespace TgBot {
 

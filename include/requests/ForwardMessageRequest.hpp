@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/SuggestedPostParameters.hpp"
+#include <tgbot/types/SuggestedPostParameters.hpp>
 
 namespace TgBot {
 

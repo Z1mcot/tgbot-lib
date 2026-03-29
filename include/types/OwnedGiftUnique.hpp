@@ -7,9 +7,9 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/OwnedGift.hpp"
-#include "types/UniqueGift.hpp"
-#include "types/User.hpp"
+#include <tgbot/types/OwnedGift.hpp>
+#include <tgbot/types/UniqueGift.hpp>
+#include <tgbot/types/User.hpp>
 
 namespace TgBot {
 

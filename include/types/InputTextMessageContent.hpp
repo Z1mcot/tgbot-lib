@@ -7,9 +7,9 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/InputMessageContent.hpp"
-#include "types/MessageEntity.hpp"
-#include "types/LinkPreviewOptions.hpp"
+#include <tgbot/types/InputMessageContent.hpp>
+#include <tgbot/types/MessageEntity.hpp>
+#include <tgbot/types/LinkPreviewOptions.hpp>
 
 namespace TgBot {
 

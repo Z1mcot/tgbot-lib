@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/InlineQueryResult.hpp"
+#include <tgbot/types/InlineQueryResult.hpp>
 
 namespace TgBot {
 

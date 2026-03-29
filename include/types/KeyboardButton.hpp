@@ -7,11 +7,11 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/TelegramModel.hpp"
-#include "types/KeyboardButtonRequestUsers.hpp"
-#include "types/KeyboardButtonRequestChat.hpp"
-#include "types/KeyboardButtonPollType.hpp"
-#include "types/WebAppInfo.hpp"
+#include <tgbot/types/TelegramModel.hpp>
+#include <tgbot/types/KeyboardButtonRequestUsers.hpp>
+#include <tgbot/types/KeyboardButtonRequestChat.hpp>
+#include <tgbot/types/KeyboardButtonPollType.hpp>
+#include <tgbot/types/WebAppInfo.hpp>
 
 namespace TgBot {
 

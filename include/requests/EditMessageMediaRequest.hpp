@@ -7,8 +7,8 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/InputMedia.hpp"
-#include "types/InlineKeyboardMarkup.hpp"
+#include <tgbot/types/InputMedia.hpp>
+#include <tgbot/types/InlineKeyboardMarkup.hpp>
 
 namespace TgBot {
 

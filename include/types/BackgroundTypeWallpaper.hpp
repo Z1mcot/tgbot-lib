@@ -7,8 +7,8 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/BackgroundType.hpp"
-#include "types/Document.hpp"
+#include <tgbot/types/BackgroundType.hpp>
+#include <tgbot/types/Document.hpp>
 
 namespace TgBot {
 

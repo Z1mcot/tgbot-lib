@@ -7,9 +7,9 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/TelegramModel.hpp"
-#include "types/StoryAreaPosition.hpp"
-#include "types/StoryAreaType.hpp"
+#include <tgbot/types/TelegramModel.hpp>
+#include <tgbot/types/StoryAreaPosition.hpp>
+#include <tgbot/types/StoryAreaType.hpp>
 
 namespace TgBot {
 

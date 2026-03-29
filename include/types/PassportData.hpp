@@ -7,9 +7,9 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/TelegramModel.hpp"
-#include "types/EncryptedPassportElement.hpp"
-#include "types/EncryptedCredentials.hpp"
+#include <tgbot/types/TelegramModel.hpp>
+#include <tgbot/types/EncryptedPassportElement.hpp>
+#include <tgbot/types/EncryptedCredentials.hpp>
 
 namespace TgBot {
 

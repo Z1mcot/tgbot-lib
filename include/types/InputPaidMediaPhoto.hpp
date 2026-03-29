@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/InputPaidMedia.hpp"
+#include <tgbot/types/InputPaidMedia.hpp>
 
 namespace TgBot {
 

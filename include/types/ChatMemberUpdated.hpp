@@ -7,10 +7,10 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/ChatMember.hpp"
-#include "types/Chat.hpp"
-#include "types/User.hpp"
-#include "types/ChatInviteLink.hpp"
+#include <tgbot/types/ChatMember.hpp>
+#include <tgbot/types/Chat.hpp>
+#include <tgbot/types/User.hpp>
+#include <tgbot/types/ChatInviteLink.hpp>
 
 namespace TgBot {
 

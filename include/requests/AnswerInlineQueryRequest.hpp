@@ -7,8 +7,8 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/InlineQueryResult.hpp"
-#include "types/InlineQueryResultsButton.hpp"
+#include <tgbot/types/InlineQueryResult.hpp>
+#include <tgbot/types/InlineQueryResultsButton.hpp>
 
 namespace TgBot {
 

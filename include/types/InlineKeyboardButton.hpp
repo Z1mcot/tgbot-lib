@@ -7,12 +7,12 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/TelegramModel.hpp"
-#include "types/CallbackGame.hpp"
-#include "types/WebAppInfo.hpp"
-#include "types/LoginUrl.hpp"
-#include "types/SwitchInlineQueryChosenChat.hpp"
-#include "types/CopyTextButton.hpp"
+#include <tgbot/types/TelegramModel.hpp>
+#include <tgbot/types/CallbackGame.hpp>
+#include <tgbot/types/WebAppInfo.hpp>
+#include <tgbot/types/LoginUrl.hpp>
+#include <tgbot/types/SwitchInlineQueryChosenChat.hpp>
+#include <tgbot/types/CopyTextButton.hpp>
 
 namespace TgBot {
 

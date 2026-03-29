@@ -7,9 +7,9 @@
 #include <vector>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include "types/TelegramModel.hpp"
-#include "types/PollOption.hpp"
-#include "types/MessageEntity.hpp"
+#include <tgbot/types/TelegramModel.hpp>
+#include <tgbot/types/PollOption.hpp>
+#include <tgbot/types/MessageEntity.hpp>
 
 namespace TgBot {
 
