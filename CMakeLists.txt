@@ -36,7 +36,7 @@ find_package(nlohmann_json)
 set(TGBOT_SOURCES "")
 set(TGBOT_HEADERS "")
 
-add_subdirectory(include)
+add_subdirectory(include/tgbot)
 add_subdirectory(src)
 # Create library target
 add_library(tgbot-lib STATIC
@@ -46,7 +46,7 @@ add_library(tgbot-lib STATIC
 target_include_directories(tgbot-lib
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include>
+        #$<INSTALL_INTERFACE:include>
 )
 
 if(APPLE)
@@ -67,7 +67,7 @@ target_link_libraries(tgbot-lib
         PkgConfig::libcoro
         httplib::httplib
 )
-# Install rules (optional)
+# Install rules
 install(TARGETS ${PROJECT_NAME}
     EXPORT ${PROJECT_NAME}-targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -76,7 +76,7 @@ install(TARGETS ${PROJECT_NAME}
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 install(DIRECTORY include/
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/tgbot
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     FILES_MATCHING PATTERN "*.hpp"
 )
 install(EXPORT ${PROJECT_NAME}-targets

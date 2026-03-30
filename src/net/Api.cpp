@@ -3,6 +3,7 @@
 
 #include <tgbot/net/Api.hpp>
 #include <nlohmann/json.hpp>
+#include <tgbot/net/TelegramException.hpp>
 
 namespace TgBot {
     using json = nlohmann::json;
@@ -17,8 +18,9 @@ namespace TgBot {
             throw TgException("Received HTML response from Telegram API, likely an error page. Response: " + response_str, TgException::ErrorCode::HtmlResponse);
         }
 
+        json j;
         try {
-            json::parse(response_str);
+            j = json::parse(response_str);
         } catch (const json::parse_error& e) {
             throw TgException("Failed to parse JSON response: " + std::string(e.what()) + ". Response: " + response_str, TgException::ErrorCode::InvalidJson);
         }
@@ -61,11 +63,6 @@ namespace TgBot {
     }
 
     coro::task<std::vector<Update::Ptr>> Api::getUpdates(const GetUpdatesRequest& request) const {
-         request{};
-        request.offset = offset;
-        request.limit = limit;
-        request.timeout = timeout;
-        request.allowed_updates = allowed_updates;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -93,14 +90,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setWebhook(const SetWebhookRequest& request) const {
-         request{};
-        request.url = url;
-        request.certificate = certificate;
-        request.ip_address = ip_address;
-        request.max_connections = max_connections;
-        request.allowed_updates = allowed_updates;
-        request.drop_pending_updates = drop_pending_updates;
-        request.secret_token = secret_token;
         // Generate multipart form data for file uploads
         std::string boundary = "----TelegramBotAPI123456789";
         std::string body = toMultipart(request, boundary);
@@ -122,8 +111,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::deleteWebhook(const DeleteWebhookRequest& request) const {
-         request{};
-        request.drop_pending_updates = drop_pending_updates;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -185,22 +172,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendMessage(const SendMessageRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.text = text;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.parse_mode = parse_mode;
-        request.entities = entities;
-        request.link_preview_options = link_preview_options;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -230,17 +201,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::forwardMessage(const ForwardMessageRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.from_chat_id = from_chat_id;
-        request.message_id = message_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.video_start_timestamp = video_start_timestamp;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -267,14 +227,6 @@ namespace TgBot {
     }
 
     coro::task<std::vector<MessageId::Ptr>> Api::forwardMessages(const ForwardMessagesRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.from_chat_id = from_chat_id;
-        request.message_ids = message_ids;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -311,24 +263,6 @@ namespace TgBot {
     }
 
     coro::task<MessageId::Ptr> Api::copyMessage(const CopyMessageRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.from_chat_id = from_chat_id;
-        request.message_id = message_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.video_start_timestamp = video_start_timestamp;
-        request.caption = caption;
-        request.parse_mode = parse_mode;
-        request.caption_entities = caption_entities;
-        request.show_caption_above_media = show_caption_above_media;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -356,15 +290,6 @@ namespace TgBot {
     }
 
     coro::task<std::vector<MessageId::Ptr>> Api::copyMessages(const CopyMessagesRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.from_chat_id = from_chat_id;
-        request.message_ids = message_ids;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.remove_caption = remove_caption;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -401,24 +326,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendPhoto(const SendPhotoRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.photo = photo;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.caption = caption;
-        request.parse_mode = parse_mode;
-        request.caption_entities = caption_entities;
-        request.show_caption_above_media = show_caption_above_media;
-        request.has_spoiler = has_spoiler;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -457,26 +364,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendAudio(const SendAudioRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.audio = audio;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.caption = caption;
-        request.parse_mode = parse_mode;
-        request.caption_entities = caption_entities;
-        request.duration = duration;
-        request.performer = performer;
-        request.title = title;
-        request.thumbnail = thumbnail;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -513,24 +400,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendDocument(const SendDocumentRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.document = document;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.thumbnail = thumbnail;
-        request.caption = caption;
-        request.parse_mode = parse_mode;
-        request.caption_entities = caption_entities;
-        request.disable_content_type_detection = disable_content_type_detection;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -574,31 +443,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendVideo(const SendVideoRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.video = video;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.duration = duration;
-        request.width = width;
-        request.height = height;
-        request.thumbnail = thumbnail;
-        request.cover = cover;
-        request.start_timestamp = start_timestamp;
-        request.caption = caption;
-        request.parse_mode = parse_mode;
-        request.caption_entities = caption_entities;
-        request.show_caption_above_media = show_caption_above_media;
-        request.has_spoiler = has_spoiler;
-        request.supports_streaming = supports_streaming;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -639,28 +483,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendAnimation(const SendAnimationRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.animation = animation;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.duration = duration;
-        request.width = width;
-        request.height = height;
-        request.thumbnail = thumbnail;
-        request.caption = caption;
-        request.parse_mode = parse_mode;
-        request.caption_entities = caption_entities;
-        request.show_caption_above_media = show_caption_above_media;
-        request.has_spoiler = has_spoiler;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -696,23 +518,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendVoice(const SendVoiceRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.voice = voice;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.caption = caption;
-        request.parse_mode = parse_mode;
-        request.caption_entities = caption_entities;
-        request.duration = duration;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -747,22 +552,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendVideoNote(const SendVideoNoteRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.video_note = video_note;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.duration = duration;
-        request.length = length;
-        request.thumbnail = thumbnail;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -799,24 +588,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendPaidMedia(const SendPaidMediaRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.star_count = star_count;
-        request.media = media;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.payload = payload;
-        request.caption = caption;
-        request.parse_mode = parse_mode;
-        request.caption_entities = caption_entities;
-        request.show_caption_above_media = show_caption_above_media;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -846,17 +617,6 @@ namespace TgBot {
     }
 
     coro::task<std::vector<Message::Ptr>> Api::sendMediaGroup(const SendMediaGroupRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.media = media;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.reply_parameters = reply_parameters;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -893,24 +653,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendLocation(const SendLocationRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.latitude = latitude;
-        request.longitude = longitude;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.horizontal_accuracy = horizontal_accuracy;
-        request.live_period = live_period;
-        request.heading = heading;
-        request.proximity_alert_radius = proximity_alert_radius;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -949,26 +691,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendVenue(const SendVenueRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.latitude = latitude;
-        request.longitude = longitude;
-        request.title = title;
-        request.address = address;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.foursquare_id = foursquare_id;
-        request.foursquare_type = foursquare_type;
-        request.google_place_id = google_place_id;
-        request.google_place_type = google_place_type;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1003,22 +725,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendContact(const SendContactRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.phone_number = phone_number;
-        request.first_name = first_name;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.last_name = last_name;
-        request.vcard = vcard;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1061,30 +767,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendPoll(const SendPollRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.question = question;
-        request.options = options;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.question_parse_mode = question_parse_mode;
-        request.question_entities = question_entities;
-        request.is_anonymous = is_anonymous;
-        request.type_ = type_;
-        request.allows_multiple_answers = allows_multiple_answers;
-        request.correct_option_id = correct_option_id;
-        request.explanation = explanation;
-        request.explanation_parse_mode = explanation_parse_mode;
-        request.explanation_entities = explanation_entities;
-        request.open_period = open_period;
-        request.close_date = close_date;
-        request.is_closed = is_closed;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1112,15 +794,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendChecklist(const SendChecklistRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.chat_id = chat_id;
-        request.checklist = checklist;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.message_effect_id = message_effect_id;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1152,19 +825,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendDice(const SendDiceRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.emoji = emoji;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1190,13 +850,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::sendMessageDraft(const SendMessageDraftRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.draft_id = draft_id;
-        request.text = text;
-        request.message_thread_id = message_thread_id;
-        request.parse_mode = parse_mode;
-        request.entities = entities;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1220,11 +873,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::sendChatAction(const SendChatActionRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.action = action;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1248,11 +896,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setMessageReaction(const SetMessageReactionRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.message_id = message_id;
-        request.reaction = reaction;
-        request.is_big = is_big;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1275,10 +918,6 @@ namespace TgBot {
     }
 
     coro::task<UserProfilePhotos::Ptr> Api::getUserProfilePhotos(const GetUserProfilePhotosRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.offset = offset;
-        request.limit = limit;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1301,10 +940,6 @@ namespace TgBot {
     }
 
     coro::task<UserProfileAudios::Ptr> Api::getUserProfileAudios(const GetUserProfileAudiosRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.offset = offset;
-        request.limit = limit;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1327,10 +962,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setUserEmojiStatus(const SetUserEmojiStatusRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.emoji_status_custom_emoji_id = emoji_status_custom_emoji_id;
-        request.emoji_status_expiration_date = emoji_status_expiration_date;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1351,8 +982,6 @@ namespace TgBot {
     }
 
     coro::task<File::Ptr> Api::getFile(const GetFileRequest& request) const {
-         request{};
-        request.file_id = file_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1376,11 +1005,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::banChatMember(const BanChatMemberRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.user_id = user_id;
-        request.until_date = until_date;
-        request.revoke_messages = revoke_messages;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1403,10 +1027,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::unbanChatMember(const UnbanChatMemberRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.user_id = user_id;
-        request.only_if_banned = only_if_banned;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1431,12 +1051,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::restrictChatMember(const RestrictChatMemberRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.user_id = user_id;
-        request.permissions = permissions;
-        request.use_independent_chat_permissions = use_independent_chat_permissions;
-        request.until_date = until_date;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1475,26 +1089,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::promoteChatMember(const PromoteChatMemberRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.user_id = user_id;
-        request.is_anonymous = is_anonymous;
-        request.can_manage_chat = can_manage_chat;
-        request.can_delete_messages = can_delete_messages;
-        request.can_manage_video_chats = can_manage_video_chats;
-        request.can_restrict_members = can_restrict_members;
-        request.can_promote_members = can_promote_members;
-        request.can_change_info = can_change_info;
-        request.can_invite_users = can_invite_users;
-        request.can_post_stories = can_post_stories;
-        request.can_edit_stories = can_edit_stories;
-        request.can_delete_stories = can_delete_stories;
-        request.can_post_messages = can_post_messages;
-        request.can_edit_messages = can_edit_messages;
-        request.can_pin_messages = can_pin_messages;
-        request.can_manage_topics = can_manage_topics;
-        request.can_manage_direct_messages = can_manage_direct_messages;
-        request.can_manage_tags = can_manage_tags;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1517,10 +1111,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setChatAdministratorCustomTitle(const SetChatAdministratorCustomTitleRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.user_id = user_id;
-        request.custom_title = custom_title;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1543,10 +1133,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setChatMemberTag(const SetChatMemberTagRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.user_id = user_id;
-        request.tag = tag;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1568,9 +1154,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::banChatSenderChat(const BanChatSenderChatRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.sender_chat_id = sender_chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1592,9 +1175,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::unbanChatSenderChat(const UnbanChatSenderChatRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.sender_chat_id = sender_chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1617,10 +1197,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setChatPermissions(const SetChatPermissionsRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.permissions = permissions;
-        request.use_independent_chat_permissions = use_independent_chat_permissions;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1641,8 +1217,6 @@ namespace TgBot {
     }
 
     coro::task<std::string> Api::exportChatInviteLink(const ExportChatInviteLinkRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1667,12 +1241,6 @@ namespace TgBot {
     }
 
     coro::task<ChatInviteLink::Ptr> Api::createChatInviteLink(const CreateChatInviteLinkRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.name = name;
-        request.expire_date = expire_date;
-        request.member_limit = member_limit;
-        request.creates_join_request = creates_join_request;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1698,13 +1266,6 @@ namespace TgBot {
     }
 
     coro::task<ChatInviteLink::Ptr> Api::editChatInviteLink(const EditChatInviteLinkRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.invite_link = invite_link;
-        request.name = name;
-        request.expire_date = expire_date;
-        request.member_limit = member_limit;
-        request.creates_join_request = creates_join_request;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1728,11 +1289,6 @@ namespace TgBot {
     }
 
     coro::task<ChatInviteLink::Ptr> Api::createChatSubscriptionInviteLink(const CreateChatSubscriptionInviteLinkRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.subscription_period = subscription_period;
-        request.subscription_price = subscription_price;
-        request.name = name;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1755,10 +1311,6 @@ namespace TgBot {
     }
 
     coro::task<ChatInviteLink::Ptr> Api::editChatSubscriptionInviteLink(const EditChatSubscriptionInviteLinkRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.invite_link = invite_link;
-        request.name = name;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1780,9 +1332,6 @@ namespace TgBot {
     }
 
     coro::task<ChatInviteLink::Ptr> Api::revokeChatInviteLink(const RevokeChatInviteLinkRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.invite_link = invite_link;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1804,9 +1353,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::approveChatJoinRequest(const ApproveChatJoinRequestRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.user_id = user_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1828,9 +1374,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::declineChatJoinRequest(const DeclineChatJoinRequestRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.user_id = user_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1853,9 +1396,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setChatPhoto(const SetChatPhotoRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.photo = photo;
         // Generate multipart form data for file uploads
         std::string boundary = "----TelegramBotAPI123456789";
         std::string body = toMultipart(request, boundary);
@@ -1877,8 +1417,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::deleteChatPhoto(const DeleteChatPhotoRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1900,9 +1438,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setChatTitle(const SetChatTitleRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.title = title;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1924,9 +1459,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setChatDescription(const SetChatDescriptionRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.description = description;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1950,11 +1482,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::pinChatMessage(const PinChatMessageRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.message_id = message_id;
-        request.business_connection_id = business_connection_id;
-        request.disable_notification = disable_notification;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -1977,10 +1504,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::unpinChatMessage(const UnpinChatMessageRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.business_connection_id = business_connection_id;
-        request.message_id = message_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2001,8 +1524,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::unpinAllChatMessages(const UnpinAllChatMessagesRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2023,8 +1544,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::leaveChat(const LeaveChatRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2045,8 +1564,6 @@ namespace TgBot {
     }
 
     coro::task<ChatFullInfo::Ptr> Api::getChat(const GetChatRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2067,8 +1584,6 @@ namespace TgBot {
     }
 
     coro::task<std::vector<ChatMember::Ptr>> Api::getChatAdministrators(const GetChatAdministratorsRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2089,8 +1604,6 @@ namespace TgBot {
     }
 
     coro::task<std::int64_t> Api::getChatMemberCount(const GetChatMemberCountRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2112,9 +1625,6 @@ namespace TgBot {
     }
 
     coro::task<ChatMember::Ptr> Api::getChatMember(const GetChatMemberRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.user_id = user_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2136,9 +1646,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setChatStickerSet(const SetChatStickerSetRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.sticker_set_name = sticker_set_name;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2159,8 +1666,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::deleteChatStickerSet(const DeleteChatStickerSetRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2190,11 +1695,6 @@ namespace TgBot {
     }
 
     coro::task<ForumTopic::Ptr> Api::createForumTopic(const CreateForumTopicRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.name = name;
-        request.icon_color = icon_color;
-        request.icon_custom_emoji_id = icon_custom_emoji_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2218,11 +1718,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::editForumTopic(const EditForumTopicRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.message_thread_id = message_thread_id;
-        request.name = name;
-        request.icon_custom_emoji_id = icon_custom_emoji_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2244,9 +1739,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::closeForumTopic(const CloseForumTopicRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.message_thread_id = message_thread_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2268,9 +1760,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::reopenForumTopic(const ReopenForumTopicRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.message_thread_id = message_thread_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2292,9 +1781,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::deleteForumTopic(const DeleteForumTopicRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.message_thread_id = message_thread_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2316,9 +1802,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::unpinAllForumTopicMessages(const UnpinAllForumTopicMessagesRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.message_thread_id = message_thread_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2340,9 +1823,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::editGeneralForumTopic(const EditGeneralForumTopicRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.name = name;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2363,8 +1843,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::closeGeneralForumTopic(const CloseGeneralForumTopicRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2385,8 +1863,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::reopenGeneralForumTopic(const ReopenGeneralForumTopicRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2407,8 +1883,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::hideGeneralForumTopic(const HideGeneralForumTopicRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2429,8 +1903,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::unhideGeneralForumTopic(const UnhideGeneralForumTopicRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2451,8 +1923,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::unpinAllGeneralForumTopicMessages(const UnpinAllGeneralForumTopicMessagesRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2477,12 +1947,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::answerCallbackQuery(const AnswerCallbackQueryRequest& request) const {
-         request{};
-        request.callback_query_id = callback_query_id;
-        request.text = text;
-        request.show_alert = show_alert;
-        request.url = url;
-        request.cache_time = cache_time;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2504,9 +1968,6 @@ namespace TgBot {
     }
 
     coro::task<UserChatBoosts::Ptr> Api::getUserChatBoosts(const GetUserChatBoostsRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.user_id = user_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2527,8 +1988,6 @@ namespace TgBot {
     }
 
     coro::task<BusinessConnection::Ptr> Api::getBusinessConnection(const GetBusinessConnectionRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2551,10 +2010,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setMyCommands(const SetMyCommandsRequest& request) const {
-         request{};
-        request.commands = commands;
-        request.scope = scope;
-        request.language_code = language_code;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2576,9 +2031,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::deleteMyCommands(const DeleteMyCommandsRequest& request) const {
-         request{};
-        request.scope = scope;
-        request.language_code = language_code;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2600,9 +2052,6 @@ namespace TgBot {
     }
 
     coro::task<std::vector<BotCommand::Ptr>> Api::getMyCommands(const GetMyCommandsRequest& request) const {
-         request{};
-        request.scope = scope;
-        request.language_code = language_code;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2624,9 +2073,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setMyName(const SetMyNameRequest& request) const {
-         request{};
-        request.name = name;
-        request.language_code = language_code;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2647,8 +2093,6 @@ namespace TgBot {
     }
 
     coro::task<BotName::Ptr> Api::getMyName(const GetMyNameRequest& request) const {
-         request{};
-        request.language_code = language_code;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2670,9 +2114,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setMyDescription(const SetMyDescriptionRequest& request) const {
-         request{};
-        request.description = description;
-        request.language_code = language_code;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2693,8 +2134,6 @@ namespace TgBot {
     }
 
     coro::task<BotDescription::Ptr> Api::getMyDescription(const GetMyDescriptionRequest& request) const {
-         request{};
-        request.language_code = language_code;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2716,9 +2155,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setMyShortDescription(const SetMyShortDescriptionRequest& request) const {
-         request{};
-        request.short_description = short_description;
-        request.language_code = language_code;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2739,8 +2175,6 @@ namespace TgBot {
     }
 
     coro::task<BotShortDescription::Ptr> Api::getMyShortDescription(const GetMyShortDescriptionRequest& request) const {
-         request{};
-        request.language_code = language_code;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2761,8 +2195,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setMyProfilePhoto(const SetMyProfilePhotoRequest& request) const {
-         request{};
-        request.photo = photo;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2784,9 +2216,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setChatMenuButton(const SetChatMenuButtonRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.menu_button = menu_button;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2807,8 +2236,6 @@ namespace TgBot {
     }
 
     coro::task<MenuButton::Ptr> Api::getChatMenuButton(const GetChatMenuButtonRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2830,9 +2257,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setMyDefaultAdministratorRights(const SetMyDefaultAdministratorRightsRequest& request) const {
-         request{};
-        request.rights = rights;
-        request.for_channels = for_channels;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2853,8 +2277,6 @@ namespace TgBot {
     }
 
     coro::task<ChatAdministratorRights::Ptr> Api::getMyDefaultAdministratorRights(const GetMyDefaultAdministratorRightsRequest& request) const {
-         request{};
-        request.for_channels = for_channels;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2881,14 +2303,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::sendGift(const SendGiftRequest& request) const {
-         request{};
-        request.gift_id = gift_id;
-        request.user_id = user_id;
-        request.chat_id = chat_id;
-        request.pay_for_upgrade = pay_for_upgrade;
-        request.text = text;
-        request.text_parse_mode = text_parse_mode;
-        request.text_entities = text_entities;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2914,13 +2328,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::giftPremiumSubscription(const GiftPremiumSubscriptionRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.month_count = month_count;
-        request.star_count = star_count;
-        request.text = text;
-        request.text_parse_mode = text_parse_mode;
-        request.text_entities = text_entities;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2942,9 +2349,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::verifyUser(const VerifyUserRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.custom_description = custom_description;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2966,9 +2370,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::verifyChat(const VerifyChatRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.custom_description = custom_description;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -2989,8 +2390,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::removeUserVerification(const RemoveUserVerificationRequest& request) const {
-         request{};
-        request.user_id = user_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3011,8 +2410,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::removeChatVerification(const RemoveChatVerificationRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3035,10 +2432,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::readBusinessMessage(const ReadBusinessMessageRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.chat_id = chat_id;
-        request.message_id = message_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3060,9 +2453,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::deleteBusinessMessages(const DeleteBusinessMessagesRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.message_ids = message_ids;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3085,10 +2475,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setBusinessAccountName(const SetBusinessAccountNameRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.first_name = first_name;
-        request.last_name = last_name;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3110,9 +2496,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setBusinessAccountUsername(const SetBusinessAccountUsernameRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.username = username;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3134,9 +2517,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setBusinessAccountBio(const SetBusinessAccountBioRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.bio = bio;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3159,10 +2539,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setBusinessAccountProfilePhoto(const SetBusinessAccountProfilePhotoRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.photo = photo;
-        request.is_public = is_public;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3184,9 +2560,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::removeBusinessAccountProfilePhoto(const RemoveBusinessAccountProfilePhotoRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.is_public = is_public;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3209,10 +2582,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setBusinessAccountGiftSettings(const SetBusinessAccountGiftSettingsRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.show_gift_button = show_gift_button;
-        request.accepted_gift_types = accepted_gift_types;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3233,8 +2602,6 @@ namespace TgBot {
     }
 
     coro::task<StarAmount::Ptr> Api::getBusinessAccountStarBalance(const GetBusinessAccountStarBalanceRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3256,9 +2623,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::transferBusinessAccountStars(const TransferBusinessAccountStarsRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.star_count = star_count;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3289,18 +2653,6 @@ namespace TgBot {
     }
 
     coro::task<OwnedGifts::Ptr> Api::getBusinessAccountGifts(const GetBusinessAccountGiftsRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.exclude_unsaved = exclude_unsaved;
-        request.exclude_saved = exclude_saved;
-        request.exclude_unlimited = exclude_unlimited;
-        request.exclude_limited_upgradable = exclude_limited_upgradable;
-        request.exclude_limited_non_upgradable = exclude_limited_non_upgradable;
-        request.exclude_unique = exclude_unique;
-        request.exclude_from_blockchain = exclude_from_blockchain;
-        request.sort_by_price = sort_by_price;
-        request.offset = offset;
-        request.limit = limit;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3329,16 +2681,6 @@ namespace TgBot {
     }
 
     coro::task<OwnedGifts::Ptr> Api::getUserGifts(const GetUserGiftsRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.exclude_unlimited = exclude_unlimited;
-        request.exclude_limited_upgradable = exclude_limited_upgradable;
-        request.exclude_limited_non_upgradable = exclude_limited_non_upgradable;
-        request.exclude_from_blockchain = exclude_from_blockchain;
-        request.exclude_unique = exclude_unique;
-        request.sort_by_price = sort_by_price;
-        request.offset = offset;
-        request.limit = limit;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3369,18 +2711,6 @@ namespace TgBot {
     }
 
     coro::task<OwnedGifts::Ptr> Api::getChatGifts(const GetChatGiftsRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.exclude_unsaved = exclude_unsaved;
-        request.exclude_saved = exclude_saved;
-        request.exclude_unlimited = exclude_unlimited;
-        request.exclude_limited_upgradable = exclude_limited_upgradable;
-        request.exclude_limited_non_upgradable = exclude_limited_non_upgradable;
-        request.exclude_from_blockchain = exclude_from_blockchain;
-        request.exclude_unique = exclude_unique;
-        request.sort_by_price = sort_by_price;
-        request.offset = offset;
-        request.limit = limit;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3402,9 +2732,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::convertGiftToStars(const ConvertGiftToStarsRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.owned_gift_id = owned_gift_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3428,11 +2755,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::upgradeGift(const UpgradeGiftRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.owned_gift_id = owned_gift_id;
-        request.keep_original_details = keep_original_details;
-        request.star_count = star_count;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3456,11 +2778,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::transferGift(const TransferGiftRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.owned_gift_id = owned_gift_id;
-        request.new_owner_chat_id = new_owner_chat_id;
-        request.star_count = star_count;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3489,16 +2806,6 @@ namespace TgBot {
     }
 
     coro::task<Story::Ptr> Api::postStory(const PostStoryRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.content = content;
-        request.active_period = active_period;
-        request.caption = caption;
-        request.parse_mode = parse_mode;
-        request.caption_entities = caption_entities;
-        request.areas = areas;
-        request.post_to_chat_page = post_to_chat_page;
-        request.protect_content = protect_content;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3524,13 +2831,6 @@ namespace TgBot {
     }
 
     coro::task<Story::Ptr> Api::repostStory(const RepostStoryRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.from_chat_id = from_chat_id;
-        request.from_story_id = from_story_id;
-        request.active_period = active_period;
-        request.post_to_chat_page = post_to_chat_page;
-        request.protect_content = protect_content;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3557,14 +2857,6 @@ namespace TgBot {
     }
 
     coro::task<Story::Ptr> Api::editStory(const EditStoryRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.story_id = story_id;
-        request.content = content;
-        request.caption = caption;
-        request.parse_mode = parse_mode;
-        request.caption_entities = caption_entities;
-        request.areas = areas;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3586,9 +2878,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::deleteStory(const DeleteStoryRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.story_id = story_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3620,16 +2909,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::editMessageText(const EditMessageTextRequest& request) const {
-         request{};
-        request.text = text;
-        request.business_connection_id = business_connection_id;
-        request.chat_id = chat_id;
-        request.message_id = message_id;
-        request.inline_message_id = inline_message_id;
-        request.parse_mode = parse_mode;
-        request.entities = entities;
-        request.link_preview_options = link_preview_options;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3658,16 +2937,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::editMessageCaption(const EditMessageCaptionRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.chat_id = chat_id;
-        request.message_id = message_id;
-        request.inline_message_id = inline_message_id;
-        request.caption = caption;
-        request.parse_mode = parse_mode;
-        request.caption_entities = caption_entities;
-        request.show_caption_above_media = show_caption_above_media;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3693,13 +2962,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::editMessageMedia(const EditMessageMediaRequest& request) const {
-         request{};
-        request.media = media;
-        request.business_connection_id = business_connection_id;
-        request.chat_id = chat_id;
-        request.message_id = message_id;
-        request.inline_message_id = inline_message_id;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3730,18 +2992,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::editMessageLiveLocation(const EditMessageLiveLocationRequest& request) const {
-         request{};
-        request.latitude = latitude;
-        request.longitude = longitude;
-        request.business_connection_id = business_connection_id;
-        request.chat_id = chat_id;
-        request.message_id = message_id;
-        request.inline_message_id = inline_message_id;
-        request.live_period = live_period;
-        request.horizontal_accuracy = horizontal_accuracy;
-        request.heading = heading;
-        request.proximity_alert_radius = proximity_alert_radius;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3766,12 +3016,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::stopMessageLiveLocation(const StopMessageLiveLocationRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.chat_id = chat_id;
-        request.message_id = message_id;
-        request.inline_message_id = inline_message_id;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3796,12 +3040,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::editMessageChecklist(const EditMessageChecklistRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.chat_id = chat_id;
-        request.message_id = message_id;
-        request.checklist = checklist;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3826,12 +3064,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::editMessageReplyMarkup(const EditMessageReplyMarkupRequest& request) const {
-         request{};
-        request.business_connection_id = business_connection_id;
-        request.chat_id = chat_id;
-        request.message_id = message_id;
-        request.inline_message_id = inline_message_id;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3855,11 +3087,6 @@ namespace TgBot {
     }
 
     coro::task<Poll::Ptr> Api::stopPoll(const StopPollRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.message_id = message_id;
-        request.business_connection_id = business_connection_id;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3882,10 +3109,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::approveSuggestedPost(const ApproveSuggestedPostRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.message_id = message_id;
-        request.send_date = send_date;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3908,10 +3131,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::declineSuggestedPost(const DeclineSuggestedPostRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.message_id = message_id;
-        request.comment = comment;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3933,9 +3152,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::deleteMessage(const DeleteMessageRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.message_id = message_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3957,9 +3173,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::deleteMessages(const DeleteMessagesRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.message_ids = message_ids;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -3995,20 +3208,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendSticker(const SendStickerRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.sticker = sticker;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.emoji = emoji;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4029,8 +3228,6 @@ namespace TgBot {
     }
 
     coro::task<StickerSet::Ptr> Api::getStickerSet(const GetStickerSetRequest& request) const {
-         request{};
-        request.name = name;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4051,8 +3248,6 @@ namespace TgBot {
     }
 
     coro::task<std::vector<Sticker::Ptr>> Api::getCustomEmojiStickers(const GetCustomEmojiStickersRequest& request) const {
-         request{};
-        request.custom_emoji_ids = custom_emoji_ids;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4076,10 +3271,6 @@ namespace TgBot {
     }
 
     coro::task<File::Ptr> Api::uploadStickerFile(const UploadStickerFileRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.sticker = sticker;
-        request.sticker_format = sticker_format;
         // Generate multipart form data for file uploads
         std::string boundary = "----TelegramBotAPI123456789";
         std::string body = toMultipart(request, boundary);
@@ -4106,13 +3297,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::createNewStickerSet(const CreateNewStickerSetRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.name = name;
-        request.title = title;
-        request.stickers = stickers;
-        request.sticker_type = sticker_type;
-        request.needs_repainting = needs_repainting;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4135,10 +3319,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::addStickerToSet(const AddStickerToSetRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.name = name;
-        request.sticker = sticker;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4160,9 +3340,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setStickerPositionInSet(const SetStickerPositionInSetRequest& request) const {
-         request{};
-        request.sticker = sticker;
-        request.position = position;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4183,8 +3360,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::deleteStickerFromSet(const DeleteStickerFromSetRequest& request) const {
-         request{};
-        request.sticker = sticker;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4208,11 +3383,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::replaceStickerInSet(const ReplaceStickerInSetRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.name = name;
-        request.old_sticker = old_sticker;
-        request.sticker = sticker;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4234,9 +3404,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setStickerEmojiList(const SetStickerEmojiListRequest& request) const {
-         request{};
-        request.sticker = sticker;
-        request.emoji_list = emoji_list;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4258,9 +3425,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setStickerKeywords(const SetStickerKeywordsRequest& request) const {
-         request{};
-        request.sticker = sticker;
-        request.keywords = keywords;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4282,9 +3446,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setStickerMaskPosition(const SetStickerMaskPositionRequest& request) const {
-         request{};
-        request.sticker = sticker;
-        request.mask_position = mask_position;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4306,9 +3467,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setStickerSetTitle(const SetStickerSetTitleRequest& request) const {
-         request{};
-        request.name = name;
-        request.title = title;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4332,11 +3490,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setStickerSetThumbnail(const SetStickerSetThumbnailRequest& request) const {
-         request{};
-        request.name = name;
-        request.user_id = user_id;
-        request.format = format;
-        request.thumbnail = thumbnail;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4358,9 +3511,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setCustomEmojiStickerSetThumbnail(const SetCustomEmojiStickerSetThumbnailRequest& request) const {
-         request{};
-        request.name = name;
-        request.custom_emoji_id = custom_emoji_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4381,8 +3531,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::deleteStickerSet(const DeleteStickerSetRequest& request) const {
-         request{};
-        request.name = name;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4411,13 +3559,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::answerInlineQuery(const AnswerInlineQueryRequest& request) const {
-         request{};
-        request.inline_query_id = inline_query_id;
-        request.results = results;
-        request.cache_time = cache_time;
-        request.is_personal = is_personal;
-        request.next_offset = next_offset;
-        request.button = button;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4439,9 +3580,6 @@ namespace TgBot {
     }
 
     coro::task<SentWebAppMessage::Ptr> Api::answerWebAppQuery(const AnswerWebAppQueryRequest& request) const {
-         request{};
-        request.web_app_query_id = web_app_query_id;
-        request.result = result;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4467,13 +3605,6 @@ namespace TgBot {
     }
 
     coro::task<PreparedInlineMessage::Ptr> Api::savePreparedInlineMessage(const SavePreparedInlineMessageRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.result = result;
-        request.allow_user_chats = allow_user_chats;
-        request.allow_bot_chats = allow_bot_chats;
-        request.allow_group_chats = allow_group_chats;
-        request.allow_channel_chats = allow_channel_chats;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4527,38 +3658,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendInvoice(const SendInvoiceRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.title = title;
-        request.description = description;
-        request.payload = payload;
-        request.currency = currency;
-        request.prices = prices;
-        request.message_thread_id = message_thread_id;
-        request.direct_messages_topic_id = direct_messages_topic_id;
-        request.provider_token = provider_token;
-        request.max_tip_amount = max_tip_amount;
-        request.suggested_tip_amounts = suggested_tip_amounts;
-        request.start_parameter = start_parameter;
-        request.provider_data = provider_data;
-        request.photo_url = photo_url;
-        request.photo_size = photo_size;
-        request.photo_width = photo_width;
-        request.photo_height = photo_height;
-        request.need_name = need_name;
-        request.need_phone_number = need_phone_number;
-        request.need_email = need_email;
-        request.need_shipping_address = need_shipping_address;
-        request.send_phone_number_to_provider = send_phone_number_to_provider;
-        request.send_email_to_provider = send_email_to_provider;
-        request.is_flexible = is_flexible;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.suggested_post_parameters = suggested_post_parameters;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4600,29 +3699,6 @@ namespace TgBot {
     }
 
     coro::task<std::string> Api::createInvoiceLink(const CreateInvoiceLinkRequest& request) const {
-         request{};
-        request.title = title;
-        request.description = description;
-        request.payload = payload;
-        request.currency = currency;
-        request.prices = prices;
-        request.business_connection_id = business_connection_id;
-        request.provider_token = provider_token;
-        request.subscription_period = subscription_period;
-        request.max_tip_amount = max_tip_amount;
-        request.suggested_tip_amounts = suggested_tip_amounts;
-        request.provider_data = provider_data;
-        request.photo_url = photo_url;
-        request.photo_size = photo_size;
-        request.photo_width = photo_width;
-        request.photo_height = photo_height;
-        request.need_name = need_name;
-        request.need_phone_number = need_phone_number;
-        request.need_email = need_email;
-        request.need_shipping_address = need_shipping_address;
-        request.send_phone_number_to_provider = send_phone_number_to_provider;
-        request.send_email_to_provider = send_email_to_provider;
-        request.is_flexible = is_flexible;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4646,11 +3722,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::answerShippingQuery(const AnswerShippingQueryRequest& request) const {
-         request{};
-        request.shipping_query_id = shipping_query_id;
-        request.ok = ok;
-        request.shipping_options = shipping_options;
-        request.error_message = error_message;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4673,10 +3744,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::answerPreCheckoutQuery(const AnswerPreCheckoutQueryRequest& request) const {
-         request{};
-        request.pre_checkout_query_id = pre_checkout_query_id;
-        request.ok = ok;
-        request.error_message = error_message;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4698,9 +3765,6 @@ namespace TgBot {
     }
 
     coro::task<StarTransactions::Ptr> Api::getStarTransactions(const GetStarTransactionsRequest& request) const {
-         request{};
-        request.offset = offset;
-        request.limit = limit;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4722,9 +3786,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::refundStarPayment(const RefundStarPaymentRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.telegram_payment_charge_id = telegram_payment_charge_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4747,10 +3808,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::editUserStarSubscription(const EditUserStarSubscriptionRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.telegram_payment_charge_id = telegram_payment_charge_id;
-        request.is_canceled = is_canceled;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4775,9 +3832,6 @@ namespace TgBot {
     }
 
     coro::task<bool> Api::setPassportDataErrors(const SetPassportDataErrorsRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.errors = errors;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4810,17 +3864,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::sendGame(const SendGameRequest& request) const {
-         request{};
-        request.chat_id = chat_id;
-        request.game_short_name = game_short_name;
-        request.business_connection_id = business_connection_id;
-        request.message_thread_id = message_thread_id;
-        request.disable_notification = disable_notification;
-        request.protect_content = protect_content;
-        request.allow_paid_broadcast = allow_paid_broadcast;
-        request.message_effect_id = message_effect_id;
-        request.reply_parameters = reply_parameters;
-        request.reply_markup = reply_markup;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4847,14 +3890,6 @@ namespace TgBot {
     }
 
     coro::task<Message::Ptr> Api::setGameScore(const SetGameScoreRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.score = score;
-        request.force = force;
-        request.disable_edit_message = disable_edit_message;
-        request.chat_id = chat_id;
-        request.message_id = message_id;
-        request.inline_message_id = inline_message_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";
@@ -4878,11 +3913,6 @@ namespace TgBot {
     }
 
     coro::task<std::vector<GameHighScore::Ptr>> Api::getGameHighScores(const GetGameHighScoresRequest& request) const {
-         request{};
-        request.user_id = user_id;
-        request.chat_id = chat_id;
-        request.message_id = message_id;
-        request.inline_message_id = inline_message_id;
         json j = request;
         std::string body = j.dump();
         std::string contentType = "application/json";

@@ -38,9 +38,6 @@ namespace TgBot {
             allowed_updates = *allowUpdates_;
         }
         
-        auto response = co_await api_->getUpdates(lastUpdateId_, limit_, timeout_, allowed_updates);
-        if (response.result) {
-            updates_ = response.result.value();
-        }
+        updates_ = co_await api_->getUpdates(lastUpdateId_, limit_, timeout_, allowed_updates);
     }
 }
