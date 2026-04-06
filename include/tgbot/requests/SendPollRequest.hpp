@@ -28,14 +28,21 @@ namespace TgBot {
      * @param question_entities A JSON-serialized list of special entities that appear in the poll question. It can be specified instead of question_parse_mode
      * @param is_anonymous True, if the poll needs to be anonymous, defaults to True
      * @param type Poll type, “quiz” or “regular”, defaults to “regular”
-     * @param allows_multiple_answers True, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to False
-     * @param correct_option_id 0-based identifier of the correct answer option, required for polls in quiz mode
+     * @param allows_multiple_answers Pass True, if the poll allows multiple answers, defaults to False
+     * @param allows_revoting Pass True, if the poll allows to change chosen answer options, defaults to False for quizzes and to True for regular polls
+     * @param shuffle_options Pass True, if the poll options must be shown in random order
+     * @param allow_adding_options Pass True, if answer options can be added to the poll after creation; not supported for anonymous polls and quizzes
+     * @param hide_results_until_closes Pass True, if poll results must be shown only after the poll closes
+     * @param correct_option_ids A JSON-serialized list of monotonically increasing 0-based identifiers of the correct answer options, required for polls in quiz mode
      * @param explanation Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing
      * @param explanation_parse_mode Mode for parsing entities in the explanation. See formatting options for more details.
      * @param explanation_entities A JSON-serialized list of special entities that appear in the poll explanation. It can be specified instead of explanation_parse_mode
-     * @param open_period Amount of time in seconds the poll will be active after creation, 5-600. Can't be used together with close_date.
-     * @param close_date Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future. Can't be used together with open_period.
+     * @param open_period Amount of time in seconds the poll will be active after creation, 5-2628000. Can't be used together with close_date.
+     * @param close_date Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 2628000 seconds in the future. Can't be used together with open_period.
      * @param is_closed Pass True if the poll needs to be immediately closed. This can be useful for poll preview.
+     * @param description Description of the poll to be sent, 0-1024 characters after entities parsing
+     * @param description_parse_mode Mode for parsing entities in the poll description. See formatting options for more details.
+     * @param description_entities A JSON-serialized list of special entities that appear in the poll description, which can be specified instead of description_parse_mode
      * @param disable_notification Sends the message silently. Users will receive a notification with no sound.
      * @param protect_content Protects the contents of the sent message from forwarding and saving
      * @param allow_paid_broadcast Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance
@@ -72,11 +79,23 @@ namespace TgBot {
         // Poll type, “quiz” or “regular”, defaults to “regular”
         std::string type_ = "";
 
-        // True, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to False
+        // Pass True, if the poll allows multiple answers, defaults to False
         bool allows_multiple_answers = false;
 
-        // 0-based identifier of the correct answer option, required for polls in quiz mode
-        std::int64_t correct_option_id = 0;
+        // Pass True, if the poll allows to change chosen answer options, defaults to False for quizzes and to True for regular polls
+        bool allows_revoting = false;
+
+        // Pass True, if the poll options must be shown in random order
+        bool shuffle_options = false;
+
+        // Pass True, if answer options can be added to the poll after creation; not supported for anonymous polls and quizzes
+        bool allow_adding_options = false;
+
+        // Pass True, if poll results must be shown only after the poll closes
+        bool hide_results_until_closes = false;
+
+        // A JSON-serialized list of monotonically increasing 0-based identifiers of the correct answer options, required for polls in quiz mode
+        std::vector<std::int64_t> correct_option_ids = std::vector<std::int64_t>();
 
         // Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing
         std::string explanation = "";
@@ -87,14 +106,23 @@ namespace TgBot {
         // A JSON-serialized list of special entities that appear in the poll explanation. It can be specified instead of explanation_parse_mode
         std::vector<MessageEntity::Ptr> explanation_entities = std::vector<MessageEntity::Ptr>();
 
-        // Amount of time in seconds the poll will be active after creation, 5-600. Can't be used together with close_date.
+        // Amount of time in seconds the poll will be active after creation, 5-2628000. Can't be used together with close_date.
         std::int64_t open_period = 0;
 
-        // Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future. Can't be used together with open_period.
+        // Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 2628000 seconds in the future. Can't be used together with open_period.
         std::int64_t close_date = 0;
 
         // Pass True if the poll needs to be immediately closed. This can be useful for poll preview.
         bool is_closed = false;
+
+        // Description of the poll to be sent, 0-1024 characters after entities parsing
+        std::string description = "";
+
+        // Mode for parsing entities in the poll description. See formatting options for more details.
+        std::string description_parse_mode = "";
+
+        // A JSON-serialized list of special entities that appear in the poll description, which can be specified instead of description_parse_mode
+        std::vector<MessageEntity::Ptr> description_entities = std::vector<MessageEntity::Ptr>();
 
         // Sends the message silently. Users will receive a notification with no sound.
         bool disable_notification = false;

@@ -26,12 +26,15 @@ namespace TgBot {
      * @param is_anonymous True, if the poll is anonymous
      * @param type Poll type, currently can be “regular” or “quiz”
      * @param allows_multiple_answers True, if the poll allows multiple answers
+     * @param allows_revoting True, if the poll allows to change the chosen answer options
      * @param question_entities Optional. Special entities that appear in the question. Currently, only custom emoji entities are allowed in poll questions
-     * @param correct_option_id Optional. 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.
+     * @param correct_option_ids Optional. Array of 0-based identifiers of the correct answer options. Available only for polls in quiz mode which are closed or were sent (not forwarded) by the bot or to the private chat with the bot.
      * @param explanation Optional. Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters
      * @param explanation_entities Optional. Special entities like usernames, URLs, bot commands, etc. that appear in the explanation
      * @param open_period Optional. Amount of time in seconds the poll will be active after creation
      * @param close_date Optional. Point in time (Unix timestamp) when the poll will be automatically closed
+     * @param description Optional. Description of the poll; for polls inside the Message object only
+     * @param description_entities Optional. Special entities like usernames, URLs, bot commands, etc. that appear in the description
      */
     struct Poll : public TelegramModel {
         typedef std::shared_ptr<Poll> Ptr;
@@ -62,11 +65,14 @@ namespace TgBot {
         // True, if the poll allows multiple answers
         bool allows_multiple_answers = false;
 
+        // True, if the poll allows to change the chosen answer options
+        bool allows_revoting = false;
+
         // Optional. Special entities that appear in the question. Currently, only custom emoji entities are allowed in poll questions
         std::vector<MessageEntity::Ptr> question_entities = std::vector<MessageEntity::Ptr>();
 
-        // Optional. 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.
-        std::int64_t correct_option_id = 0;
+        // Optional. Array of 0-based identifiers of the correct answer options. Available only for polls in quiz mode which are closed or were sent (not forwarded) by the bot or to the private chat with the bot.
+        std::vector<std::int64_t> correct_option_ids = std::vector<std::int64_t>();
 
         // Optional. Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters
         std::string explanation = "";
@@ -79,6 +85,12 @@ namespace TgBot {
 
         // Optional. Point in time (Unix timestamp) when the poll will be automatically closed
         std::int64_t close_date = 0;
+
+        // Optional. Description of the poll; for polls inside the Message object only
+        std::string description = "";
+
+        // Optional. Special entities like usernames, URLs, bot commands, etc. that appear in the description
+        std::vector<MessageEntity::Ptr> description_entities = std::vector<MessageEntity::Ptr>();
     };
     void to_json(json& j, const Poll& value);
     void from_json(const json& j, Poll& value);

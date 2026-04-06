@@ -20,6 +20,7 @@ namespace TgBot {
      *
      * @param poll_id Unique poll identifier
      * @param option_ids 0-based identifiers of chosen answer options. May be empty if the vote was retracted.
+     * @param option_persistent_ids Persistent identifiers of the chosen answer options. May be empty if the vote was retracted.
      * @param voter_chat Optional. The chat that changed the answer to the poll, if the voter is anonymous
      * @param user Optional. The user that changed the answer to the poll, if the voter isn't anonymous
      */
@@ -33,6 +34,9 @@ namespace TgBot {
 
         // 0-based identifiers of chosen answer options. May be empty if the vote was retracted.
         std::vector<std::int64_t> option_ids = std::vector<std::int64_t>();
+
+        // Persistent identifiers of the chosen answer options. May be empty if the vote was retracted.
+        std::vector<std::string> option_persistent_ids = std::vector<std::string>();
 
         // Optional. The chat that changed the answer to the poll, if the voter is anonymous
         Chat::Ptr voter_chat = nullptr;

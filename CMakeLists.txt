@@ -8,7 +8,7 @@ if(LOCAL_DEV)
 endif()
               
 project(tgbot-lib
-    VERSION 1.0.7
+    VERSION 1.1.0
     LANGUAGES CXX
     DESCRIPTION "Telegram Bot API C++ models"
 )

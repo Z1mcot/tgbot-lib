@@ -25,6 +25,7 @@
 #include <tgbot/types/ChatJoinRequest.hpp>
 #include <tgbot/types/ChatBoostUpdated.hpp>
 #include <tgbot/types/ChatBoostRemoved.hpp>
+#include <tgbot/types/ManagedBotUpdated.hpp>
 
 namespace TgBot {
 
@@ -57,6 +58,7 @@ namespace TgBot {
      * @param chat_join_request Optional. A request to join the chat has been sent. The bot must have the can_invite_users administrator right in the chat to receive these updates.
      * @param chat_boost Optional. A chat boost was added or changed. The bot must be an administrator in the chat to receive these updates.
      * @param removed_chat_boost Optional. A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates.
+     * @param managed_bot Optional. A new bot was created to be managed by the bot or token of a bot was changed
      */
     struct Update : public TelegramModel {
         typedef std::shared_ptr<Update> Ptr;
@@ -134,6 +136,9 @@ namespace TgBot {
 
         // Optional. A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates.
         ChatBoostRemoved::Ptr removed_chat_boost = nullptr;
+
+        // Optional. A new bot was created to be managed by the bot or token of a bot was changed
+        ManagedBotUpdated::Ptr managed_bot = nullptr;
     };
     void to_json(json& j, const Update& value);
     void from_json(const json& j, Update& value);

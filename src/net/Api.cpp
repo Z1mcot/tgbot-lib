@@ -733,7 +733,7 @@ namespace TgBot {
         co_return parseResponse<Message::Ptr>(response);
     }
 
-    coro::task<Message::Ptr> Api::sendPoll(std::int64_t chat_id, const std::string& question, const std::vector<InputPollOption::Ptr>& options, const std::string& business_connection_id, std::int64_t message_thread_id, const std::string& question_parse_mode, const std::vector<MessageEntity::Ptr>& question_entities, bool is_anonymous, const std::string& type_, bool allows_multiple_answers, std::int64_t correct_option_id, const std::string& explanation, const std::string& explanation_parse_mode, const std::vector<MessageEntity::Ptr>& explanation_entities, std::int64_t open_period, std::int64_t close_date, bool is_closed, bool disable_notification, bool protect_content, bool allow_paid_broadcast, const std::string& message_effect_id, ReplyParameters::Ptr reply_parameters, KeyboardOption::Ptr reply_markup) const {
+    coro::task<Message::Ptr> Api::sendPoll(std::int64_t chat_id, const std::string& question, const std::vector<InputPollOption::Ptr>& options, const std::string& business_connection_id, std::int64_t message_thread_id, const std::string& question_parse_mode, const std::vector<MessageEntity::Ptr>& question_entities, bool is_anonymous, const std::string& type_, bool allows_multiple_answers, bool allows_revoting, bool shuffle_options, bool allow_adding_options, bool hide_results_until_closes, const std::vector<std::int64_t>& correct_option_ids, const std::string& explanation, const std::string& explanation_parse_mode, const std::vector<MessageEntity::Ptr>& explanation_entities, std::int64_t open_period, std::int64_t close_date, bool is_closed, const std::string& description, const std::string& description_parse_mode, const std::vector<MessageEntity::Ptr>& description_entities, bool disable_notification, bool protect_content, bool allow_paid_broadcast, const std::string& message_effect_id, ReplyParameters::Ptr reply_parameters, KeyboardOption::Ptr reply_markup) const {
         TgBot::SendPollRequest request{};
         request.chat_id = chat_id;
         request.question = question;
@@ -745,13 +745,20 @@ namespace TgBot {
         request.is_anonymous = is_anonymous;
         request.type_ = type_;
         request.allows_multiple_answers = allows_multiple_answers;
-        request.correct_option_id = correct_option_id;
+        request.allows_revoting = allows_revoting;
+        request.shuffle_options = shuffle_options;
+        request.allow_adding_options = allow_adding_options;
+        request.hide_results_until_closes = hide_results_until_closes;
+        request.correct_option_ids = correct_option_ids;
         request.explanation = explanation;
         request.explanation_parse_mode = explanation_parse_mode;
         request.explanation_entities = explanation_entities;
         request.open_period = open_period;
         request.close_date = close_date;
         request.is_closed = is_closed;
+        request.description = description;
+        request.description_parse_mode = description_parse_mode;
+        request.description_entities = description_entities;
         request.disable_notification = disable_notification;
         request.protect_content = protect_content;
         request.allow_paid_broadcast = allow_paid_broadcast;
@@ -1996,6 +2003,46 @@ namespace TgBot {
         co_return parseResponse<BusinessConnection::Ptr>(response);
     }
 
+    coro::task<std::string> Api::getManagedBotToken(std::int64_t user_id) const {
+        TgBot::GetManagedBotTokenRequest request{};
+        request.user_id = user_id;
+        json j = request;
+        std::string body = j.dump();
+        std::string contentType = "application/json";
+        const std::string target = "/bot" + api_key_ + "/getManagedBotToken";
+        std::string response = co_await http_client_.makeRequest(HttpVerb::POST, target, body, contentType);
+        co_return parseResponse<std::string>(response);
+    }
+
+    coro::task<std::string> Api::getManagedBotToken(const GetManagedBotTokenRequest& request) const {
+        json j = request;
+        std::string body = j.dump();
+        std::string contentType = "application/json";
+        const std::string target = "/bot" + api_key_ + "/getManagedBotToken";
+        std::string response = co_await http_client_.makeRequest(HttpVerb::POST, target, body, contentType);
+        co_return parseResponse<std::string>(response);
+    }
+
+    coro::task<std::string> Api::replaceManagedBotToken(std::int64_t user_id) const {
+        TgBot::ReplaceManagedBotTokenRequest request{};
+        request.user_id = user_id;
+        json j = request;
+        std::string body = j.dump();
+        std::string contentType = "application/json";
+        const std::string target = "/bot" + api_key_ + "/replaceManagedBotToken";
+        std::string response = co_await http_client_.makeRequest(HttpVerb::POST, target, body, contentType);
+        co_return parseResponse<std::string>(response);
+    }
+
+    coro::task<std::string> Api::replaceManagedBotToken(const ReplaceManagedBotTokenRequest& request) const {
+        json j = request;
+        std::string body = j.dump();
+        std::string contentType = "application/json";
+        const std::string target = "/bot" + api_key_ + "/replaceManagedBotToken";
+        std::string response = co_await http_client_.makeRequest(HttpVerb::POST, target, body, contentType);
+        co_return parseResponse<std::string>(response);
+    }
+
     coro::task<bool> Api::setMyCommands(const std::vector<BotCommand::Ptr>& commands, BotCommandScope::Ptr scope, const std::string& language_code) const {
         TgBot::SetMyCommandsRequest request{};
         request.commands = commands;
@@ -2886,6 +2933,73 @@ namespace TgBot {
         co_return parseResponse<bool>(response);
     }
 
+    coro::task<SentWebAppMessage::Ptr> Api::answerWebAppQuery(const std::string& web_app_query_id, InlineQueryResult::Ptr result) const {
+        TgBot::AnswerWebAppQueryRequest request{};
+        request.web_app_query_id = web_app_query_id;
+        request.result = result;
+        json j = request;
+        std::string body = j.dump();
+        std::string contentType = "application/json";
+        const std::string target = "/bot" + api_key_ + "/answerWebAppQuery";
+        std::string response = co_await http_client_.makeRequest(HttpVerb::POST, target, body, contentType);
+        co_return parseResponse<SentWebAppMessage::Ptr>(response);
+    }
+
+    coro::task<SentWebAppMessage::Ptr> Api::answerWebAppQuery(const AnswerWebAppQueryRequest& request) const {
+        json j = request;
+        std::string body = j.dump();
+        std::string contentType = "application/json";
+        const std::string target = "/bot" + api_key_ + "/answerWebAppQuery";
+        std::string response = co_await http_client_.makeRequest(HttpVerb::POST, target, body, contentType);
+        co_return parseResponse<SentWebAppMessage::Ptr>(response);
+    }
+
+    coro::task<PreparedInlineMessage::Ptr> Api::savePreparedInlineMessage(std::int64_t user_id, InlineQueryResult::Ptr result, bool allow_user_chats, bool allow_bot_chats, bool allow_group_chats, bool allow_channel_chats) const {
+        TgBot::SavePreparedInlineMessageRequest request{};
+        request.user_id = user_id;
+        request.result = result;
+        request.allow_user_chats = allow_user_chats;
+        request.allow_bot_chats = allow_bot_chats;
+        request.allow_group_chats = allow_group_chats;
+        request.allow_channel_chats = allow_channel_chats;
+        json j = request;
+        std::string body = j.dump();
+        std::string contentType = "application/json";
+        const std::string target = "/bot" + api_key_ + "/savePreparedInlineMessage";
+        std::string response = co_await http_client_.makeRequest(HttpVerb::POST, target, body, contentType);
+        co_return parseResponse<PreparedInlineMessage::Ptr>(response);
+    }
+
+    coro::task<PreparedInlineMessage::Ptr> Api::savePreparedInlineMessage(const SavePreparedInlineMessageRequest& request) const {
+        json j = request;
+        std::string body = j.dump();
+        std::string contentType = "application/json";
+        const std::string target = "/bot" + api_key_ + "/savePreparedInlineMessage";
+        std::string response = co_await http_client_.makeRequest(HttpVerb::POST, target, body, contentType);
+        co_return parseResponse<PreparedInlineMessage::Ptr>(response);
+    }
+
+    coro::task<PreparedKeyboardButton::Ptr> Api::savePreparedKeyboardButton(std::int64_t user_id, KeyboardButton::Ptr button) const {
+        TgBot::SavePreparedKeyboardButtonRequest request{};
+        request.user_id = user_id;
+        request.button = button;
+        json j = request;
+        std::string body = j.dump();
+        std::string contentType = "application/json";
+        const std::string target = "/bot" + api_key_ + "/savePreparedKeyboardButton";
+        std::string response = co_await http_client_.makeRequest(HttpVerb::POST, target, body, contentType);
+        co_return parseResponse<PreparedKeyboardButton::Ptr>(response);
+    }
+
+    coro::task<PreparedKeyboardButton::Ptr> Api::savePreparedKeyboardButton(const SavePreparedKeyboardButtonRequest& request) const {
+        json j = request;
+        std::string body = j.dump();
+        std::string contentType = "application/json";
+        const std::string target = "/bot" + api_key_ + "/savePreparedKeyboardButton";
+        std::string response = co_await http_client_.makeRequest(HttpVerb::POST, target, body, contentType);
+        co_return parseResponse<PreparedKeyboardButton::Ptr>(response);
+    }
+
 
     // Updating messages
 
@@ -3565,52 +3679,6 @@ namespace TgBot {
         const std::string target = "/bot" + api_key_ + "/answerInlineQuery";
         std::string response = co_await http_client_.makeRequest(HttpVerb::POST, target, body, contentType);
         co_return parseResponse<bool>(response);
-    }
-
-    coro::task<SentWebAppMessage::Ptr> Api::answerWebAppQuery(const std::string& web_app_query_id, InlineQueryResult::Ptr result) const {
-        TgBot::AnswerWebAppQueryRequest request{};
-        request.web_app_query_id = web_app_query_id;
-        request.result = result;
-        json j = request;
-        std::string body = j.dump();
-        std::string contentType = "application/json";
-        const std::string target = "/bot" + api_key_ + "/answerWebAppQuery";
-        std::string response = co_await http_client_.makeRequest(HttpVerb::POST, target, body, contentType);
-        co_return parseResponse<SentWebAppMessage::Ptr>(response);
-    }
-
-    coro::task<SentWebAppMessage::Ptr> Api::answerWebAppQuery(const AnswerWebAppQueryRequest& request) const {
-        json j = request;
-        std::string body = j.dump();
-        std::string contentType = "application/json";
-        const std::string target = "/bot" + api_key_ + "/answerWebAppQuery";
-        std::string response = co_await http_client_.makeRequest(HttpVerb::POST, target, body, contentType);
-        co_return parseResponse<SentWebAppMessage::Ptr>(response);
-    }
-
-    coro::task<PreparedInlineMessage::Ptr> Api::savePreparedInlineMessage(std::int64_t user_id, InlineQueryResult::Ptr result, bool allow_user_chats, bool allow_bot_chats, bool allow_group_chats, bool allow_channel_chats) const {
-        TgBot::SavePreparedInlineMessageRequest request{};
-        request.user_id = user_id;
-        request.result = result;
-        request.allow_user_chats = allow_user_chats;
-        request.allow_bot_chats = allow_bot_chats;
-        request.allow_group_chats = allow_group_chats;
-        request.allow_channel_chats = allow_channel_chats;
-        json j = request;
-        std::string body = j.dump();
-        std::string contentType = "application/json";
-        const std::string target = "/bot" + api_key_ + "/savePreparedInlineMessage";
-        std::string response = co_await http_client_.makeRequest(HttpVerb::POST, target, body, contentType);
-        co_return parseResponse<PreparedInlineMessage::Ptr>(response);
-    }
-
-    coro::task<PreparedInlineMessage::Ptr> Api::savePreparedInlineMessage(const SavePreparedInlineMessageRequest& request) const {
-        json j = request;
-        std::string body = j.dump();
-        std::string contentType = "application/json";
-        const std::string target = "/bot" + api_key_ + "/savePreparedInlineMessage";
-        std::string response = co_await http_client_.makeRequest(HttpVerb::POST, target, body, contentType);
-        co_return parseResponse<PreparedInlineMessage::Ptr>(response);
     }
 
 

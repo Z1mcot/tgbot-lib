@@ -29,6 +29,9 @@ namespace TgBot {
     if (value.checklist_task_id != 0) { 
                     j["checklist_task_id"] = value.checklist_task_id; 
             }
+    if (!value.poll_option_id.empty()) { 
+                    j["poll_option_id"] = value.poll_option_id; 
+            }
     }
 
     void from_json(const json& j, ReplyParameters& value) {
@@ -55,6 +58,9 @@ namespace TgBot {
         }
         if (j.contains("checklist_task_id")) {
             j.at("checklist_task_id").get_to(value.checklist_task_id);
+        }
+        if (j.contains("poll_option_id")) {
+            j.at("poll_option_id").get_to(value.poll_option_id);
         }
     }
 }

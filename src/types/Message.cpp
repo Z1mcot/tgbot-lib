@@ -51,7 +51,10 @@
 #include <tgbot/types/Giveaway.hpp>
 #include <tgbot/types/GiveawayWinners.hpp>
 #include <tgbot/types/GiveawayCompleted.hpp>
+#include <tgbot/types/ManagedBotCreated.hpp>
 #include <tgbot/types/PaidMessagePriceChanged.hpp>
+#include <tgbot/types/PollOptionAdded.hpp>
+#include <tgbot/types/PollOptionDeleted.hpp>
 #include <tgbot/types/SuggestedPostApproved.hpp>
 #include <tgbot/types/SuggestedPostApprovalFailed.hpp>
 #include <tgbot/types/SuggestedPostDeclined.hpp>
@@ -117,6 +120,9 @@ namespace TgBot {
             }
     if (value.reply_to_checklist_task_id != 0) { 
                     j["reply_to_checklist_task_id"] = value.reply_to_checklist_task_id; 
+            }
+    if (!value.reply_to_poll_option_id.empty()) { 
+                    j["reply_to_poll_option_id"] = value.reply_to_poll_option_id; 
             }
     if (value.via_bot) { 
                     j["via_bot"] = value.via_bot; 
@@ -343,8 +349,17 @@ namespace TgBot {
     if (value.giveaway_completed) { 
                     j["giveaway_completed"] = value.giveaway_completed; 
             }
+    if (value.managed_bot_created) { 
+                    j["managed_bot_created"] = value.managed_bot_created; 
+            }
     if (value.paid_message_price_changed) { 
                     j["paid_message_price_changed"] = value.paid_message_price_changed; 
+            }
+    if (value.poll_option_added) { 
+                    j["poll_option_added"] = value.poll_option_added; 
+            }
+    if (value.poll_option_deleted) { 
+                    j["poll_option_deleted"] = value.poll_option_deleted; 
             }
     if (value.suggested_post_approved) { 
                     j["suggested_post_approved"] = value.suggested_post_approved; 
@@ -438,6 +453,9 @@ namespace TgBot {
         }
         if (j.contains("reply_to_checklist_task_id")) {
             j.at("reply_to_checklist_task_id").get_to(value.reply_to_checklist_task_id);
+        }
+        if (j.contains("reply_to_poll_option_id")) {
+            j.at("reply_to_poll_option_id").get_to(value.reply_to_poll_option_id);
         }
         if (j.contains("via_bot")) {
             j.at("via_bot").get_to(value.via_bot);
@@ -664,8 +682,17 @@ namespace TgBot {
         if (j.contains("giveaway_completed")) {
             j.at("giveaway_completed").get_to(value.giveaway_completed);
         }
+        if (j.contains("managed_bot_created")) {
+            j.at("managed_bot_created").get_to(value.managed_bot_created);
+        }
         if (j.contains("paid_message_price_changed")) {
             j.at("paid_message_price_changed").get_to(value.paid_message_price_changed);
+        }
+        if (j.contains("poll_option_added")) {
+            j.at("poll_option_added").get_to(value.poll_option_added);
+        }
+        if (j.contains("poll_option_deleted")) {
+            j.at("poll_option_deleted").get_to(value.poll_option_deleted);
         }
         if (j.contains("suggested_post_approved")) {
             j.at("suggested_post_approved").get_to(value.suggested_post_approved);

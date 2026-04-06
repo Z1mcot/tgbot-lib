@@ -18,6 +18,14 @@ namespace TgBot {
         virtual ~HttpClient() = default;
 
         [[nodiscard]]
-        virtual coro::task<std::string> makeRequest(HttpVerb verb, const std::string& target, const std::string& body = "", const std::string& contentType = "application/json") = 0;
+        virtual coro::task<std::string> makeRequest(HttpVerb verb, const std::string& target, const std::string& body, const std::string& contentType) = 0;
+
+        coro::task<std::string> makeRequest(const HttpVerb verb, const std::string& target, const std::string& body) {
+            return makeRequest(verb, target, body, "application/json");
+        }
+
+        coro::task<std::string> makeRequest(const HttpVerb verb, const std::string& target) {
+            return makeRequest(verb, target, "", "application/json");
+        }
     };
 }

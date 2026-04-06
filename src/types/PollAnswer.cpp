@@ -11,6 +11,7 @@ namespace TgBot {
         j = json{};
         j["poll_id"] = value.poll_id;
         j["option_ids"] = value.option_ids;
+        j["option_persistent_ids"] = value.option_persistent_ids;
     if (value.voter_chat) { 
                     j["voter_chat"] = value.voter_chat; 
             }
@@ -25,6 +26,9 @@ namespace TgBot {
         }
         if (j.contains("option_ids")) {
             j.at("option_ids").get_to(value.option_ids);
+        }
+        if (j.contains("option_persistent_ids")) {
+            j.at("option_persistent_ids").get_to(value.option_persistent_ids);
         }
         if (j.contains("voter_chat")) {
             j.at("voter_chat").get_to(value.voter_chat);

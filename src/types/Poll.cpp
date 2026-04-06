@@ -15,11 +15,12 @@ namespace TgBot {
         j["is_anonymous"] = value.is_anonymous;
         j["type"] = value.type_;
         j["allows_multiple_answers"] = value.allows_multiple_answers;
+        j["allows_revoting"] = value.allows_revoting;
     if (!value.question_entities.empty()) { 
                     j["question_entities"] = value.question_entities; 
             }
-    if (value.correct_option_id != 0) { 
-                    j["correct_option_id"] = value.correct_option_id; 
+    if (!value.correct_option_ids.empty()) { 
+                    j["correct_option_ids"] = value.correct_option_ids; 
             }
     if (!value.explanation.empty()) { 
                     j["explanation"] = value.explanation; 
@@ -32,6 +33,12 @@ namespace TgBot {
             }
     if (value.close_date != 0) { 
                     j["close_date"] = value.close_date; 
+            }
+    if (!value.description.empty()) { 
+                    j["description"] = value.description; 
+            }
+    if (!value.description_entities.empty()) { 
+                    j["description_entities"] = value.description_entities; 
             }
     }
 
@@ -60,11 +67,14 @@ namespace TgBot {
         if (j.contains("allows_multiple_answers")) {
             j.at("allows_multiple_answers").get_to(value.allows_multiple_answers);
         }
+        if (j.contains("allows_revoting")) {
+            j.at("allows_revoting").get_to(value.allows_revoting);
+        }
         if (j.contains("question_entities")) {
             j.at("question_entities").get_to(value.question_entities);
         }
-        if (j.contains("correct_option_id")) {
-            j.at("correct_option_id").get_to(value.correct_option_id);
+        if (j.contains("correct_option_ids")) {
+            j.at("correct_option_ids").get_to(value.correct_option_ids);
         }
         if (j.contains("explanation")) {
             j.at("explanation").get_to(value.explanation);
@@ -77,6 +87,12 @@ namespace TgBot {
         }
         if (j.contains("close_date")) {
             j.at("close_date").get_to(value.close_date);
+        }
+        if (j.contains("description")) {
+            j.at("description").get_to(value.description);
+        }
+        if (j.contains("description_entities")) {
+            j.at("description_entities").get_to(value.description_entities);
         }
     }
 }

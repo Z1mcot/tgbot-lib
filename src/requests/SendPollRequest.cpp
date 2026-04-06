@@ -30,8 +30,20 @@ namespace TgBot {
     if (value.allows_multiple_answers) { 
                     j["allows_multiple_answers"] = value.allows_multiple_answers; 
             }
-    if (value.correct_option_id != 0) { 
-                    j["correct_option_id"] = value.correct_option_id; 
+    if (value.allows_revoting) { 
+                    j["allows_revoting"] = value.allows_revoting; 
+            }
+    if (value.shuffle_options) { 
+                    j["shuffle_options"] = value.shuffle_options; 
+            }
+    if (value.allow_adding_options) { 
+                    j["allow_adding_options"] = value.allow_adding_options; 
+            }
+    if (value.hide_results_until_closes) { 
+                    j["hide_results_until_closes"] = value.hide_results_until_closes; 
+            }
+    if (!value.correct_option_ids.empty()) { 
+                    j["correct_option_ids"] = value.correct_option_ids; 
             }
     if (!value.explanation.empty()) { 
                     j["explanation"] = value.explanation; 
@@ -50,6 +62,15 @@ namespace TgBot {
             }
     if (value.is_closed) { 
                     j["is_closed"] = value.is_closed; 
+            }
+    if (!value.description.empty()) { 
+                    j["description"] = value.description; 
+            }
+    if (!value.description_parse_mode.empty()) { 
+                    j["description_parse_mode"] = value.description_parse_mode; 
+            }
+    if (!value.description_entities.empty()) { 
+                    j["description_entities"] = value.description_entities; 
             }
     if (value.disable_notification) { 
                     j["disable_notification"] = value.disable_notification; 
@@ -102,8 +123,20 @@ namespace TgBot {
         if (j.contains("allows_multiple_answers")) {
             j.at("allows_multiple_answers").get_to(value.allows_multiple_answers);
         }
-        if (j.contains("correct_option_id")) {
-            j.at("correct_option_id").get_to(value.correct_option_id);
+        if (j.contains("allows_revoting")) {
+            j.at("allows_revoting").get_to(value.allows_revoting);
+        }
+        if (j.contains("shuffle_options")) {
+            j.at("shuffle_options").get_to(value.shuffle_options);
+        }
+        if (j.contains("allow_adding_options")) {
+            j.at("allow_adding_options").get_to(value.allow_adding_options);
+        }
+        if (j.contains("hide_results_until_closes")) {
+            j.at("hide_results_until_closes").get_to(value.hide_results_until_closes);
+        }
+        if (j.contains("correct_option_ids")) {
+            j.at("correct_option_ids").get_to(value.correct_option_ids);
         }
         if (j.contains("explanation")) {
             j.at("explanation").get_to(value.explanation);
@@ -122,6 +155,15 @@ namespace TgBot {
         }
         if (j.contains("is_closed")) {
             j.at("is_closed").get_to(value.is_closed);
+        }
+        if (j.contains("description")) {
+            j.at("description").get_to(value.description);
+        }
+        if (j.contains("description_parse_mode")) {
+            j.at("description_parse_mode").get_to(value.description_parse_mode);
+        }
+        if (j.contains("description_entities")) {
+            j.at("description_entities").get_to(value.description_entities);
         }
         if (j.contains("disable_notification")) {
             j.at("disable_notification").get_to(value.disable_notification);

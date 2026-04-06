@@ -15,8 +15,8 @@ namespace TgBot {
         , eventHandler_(getEvents()) {
     }
 
-    //HttpClient& Bot::_getDefaultHttpClient() {
-    //    static net::LibCoroHttpClient instance;
-    //    return instance;
-    //}
+    HttpClient& Bot::_getDefaultHttpClient() {
+       static net::LibCoroHttpClient instance;
+       return instance;
+    }
 }

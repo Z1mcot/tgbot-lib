@@ -20,7 +20,7 @@ namespace TgBot {
      * @param id Unique identifier of the task; must be positive and unique among all task identifiers currently present in the checklist
      * @param text Text of the task; 1-100 characters after entities parsing
      * @param parse_mode Optional. Mode for parsing entities in the text. See formatting options for more details.
-     * @param text_entities Optional. List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only bold, italic, underline, strikethrough, spoiler, and custom_emoji entities are allowed.
+     * @param text_entities Optional. List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only bold, italic, underline, strikethrough, spoiler, custom_emoji, and date_time entities are allowed.
      */
     struct InputChecklistTask : public TelegramModel {
         typedef std::shared_ptr<InputChecklistTask> Ptr;
@@ -36,7 +36,7 @@ namespace TgBot {
         // Optional. Mode for parsing entities in the text. See formatting options for more details.
         std::string parse_mode = "";
 
-        // Optional. List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only bold, italic, underline, strikethrough, spoiler, and custom_emoji entities are allowed.
+        // Optional. List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only bold, italic, underline, strikethrough, spoiler, custom_emoji, and date_time entities are allowed.
         std::vector<MessageEntity::Ptr> text_entities = std::vector<MessageEntity::Ptr>();
     };
     void to_json(json& j, const InputChecklistTask& value);

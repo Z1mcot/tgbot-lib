@@ -4,6 +4,7 @@
 #include <tgbot/types/KeyboardButton.hpp>
 #include <tgbot/types/KeyboardButtonRequestUsers.hpp>
 #include <tgbot/types/KeyboardButtonRequestChat.hpp>
+#include <tgbot/types/KeyboardButtonRequestManagedBot.hpp>
 #include <tgbot/types/KeyboardButtonPollType.hpp>
 #include <tgbot/types/WebAppInfo.hpp>
 #include <nlohmann/json.hpp>
@@ -23,6 +24,9 @@ namespace TgBot {
             }
     if (value.request_chat) { 
                     j["request_chat"] = value.request_chat; 
+            }
+    if (value.request_managed_bot) { 
+                    j["request_managed_bot"] = value.request_managed_bot; 
             }
     if (value.request_contact) { 
                     j["request_contact"] = value.request_contact; 
@@ -53,6 +57,9 @@ namespace TgBot {
         }
         if (j.contains("request_chat")) {
             j.at("request_chat").get_to(value.request_chat);
+        }
+        if (j.contains("request_managed_bot")) {
+            j.at("request_managed_bot").get_to(value.request_managed_bot);
         }
         if (j.contains("request_contact")) {
             j.at("request_contact").get_to(value.request_contact);

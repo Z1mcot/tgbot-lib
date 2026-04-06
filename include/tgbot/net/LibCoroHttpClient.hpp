@@ -3,24 +3,24 @@
 
 #pragma once
 #include <tgbot/net/HttpClient.hpp>
-#include <coro/thread_pool.hpp>
+#include <coro/coro.hpp>
 #include <memory>
 #include <string>
+#include <httplib.h>
 
 namespace TgBot {
 
     namespace net {
 
     class LibCoroHttpClient : public HttpClient {
-    private:
-        std::shared_ptr<coro::thread_pool> thread_pool_;
-        std::string host_;
+        std::string host_;    
+        httplib::SSLClient client_;
 
     public:
-        explicit LibCoroHttpClient(std::shared_ptr<coro::thread_pool> tp, std::string host = "api.telegram.org");
+        explicit LibCoroHttpClient(std::string host = "api.telegram.org");
 
         [[nodiscard]]
-        coro::task<std::string> makeRequest(HttpVerb verb, const std::string& target, const std::string& body, const std::string& contentType) override;
+        coro::task<std::string> makeRequest(HttpVerb verb, const std::string& target, const std::string& body, const std::string& contentType) override final;
     };
 
     }

@@ -100,7 +100,10 @@ set(TYPE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/ForumTopicCreated.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ForumTopicEdited.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/GiveawayCompleted.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ManagedBotCreated.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PaidMessagePriceChanged.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PollOptionAdded.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PollOptionDeleted.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SuggestedPostApproved.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SuggestedPostApprovalFailed.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SuggestedPostDeclined.cpp
@@ -137,6 +140,7 @@ set(TYPE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/ChatBoost.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ChatBoostUpdated.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ChatBoostRemoved.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ManagedBotUpdated.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Update.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/WebhookInfo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/AcceptedGiftTypes.cpp
@@ -177,6 +181,7 @@ set(TYPE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/KeyboardButtonRequestUsers.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ChatAdministratorRights.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/KeyboardButtonRequestChat.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KeyboardButtonRequestManagedBot.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/KeyboardButtonPollType.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/KeyboardButton.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ReplyKeyboardMarkup.cpp
@@ -222,6 +227,9 @@ set(TYPE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/ChatBoostSourceGiftCode.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ChatBoostSourceGiveaway.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UserChatBoosts.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SentWebAppMessage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PreparedInlineMessage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PreparedKeyboardButton.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ResponseParameters.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/InputMediaPhoto.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/InputMediaVideo.cpp
@@ -263,8 +271,6 @@ set(TYPE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/InputContactMessageContent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/LabeledPrice.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/InputInvoiceMessageContent.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/SentWebAppMessage.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/PreparedInlineMessage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ShippingOption.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RevenueWithdrawalStatePending.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RevenueWithdrawalStateSucceeded.cpp

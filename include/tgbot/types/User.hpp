@@ -31,6 +31,7 @@ namespace TgBot {
      * @param has_main_web_app Optional. True, if the bot has a main Web App. Returned only in getMe.
      * @param has_topics_enabled Optional. True, if the bot has forum topic mode enabled in private chats. Returned only in getMe.
      * @param allows_users_to_create_topics Optional. True, if the bot allows users to create and delete topics in private chats. Returned only in getMe.
+     * @param can_manage_bots Optional. True, if other bots can be created to be controlled by the bot. Returned only in getMe.
      */
     struct User : public TelegramModel {
         typedef std::shared_ptr<User> Ptr;
@@ -81,6 +82,9 @@ namespace TgBot {
 
         // Optional. True, if the bot allows users to create and delete topics in private chats. Returned only in getMe.
         bool allows_users_to_create_topics = false;
+
+        // Optional. True, if other bots can be created to be controlled by the bot. Returned only in getMe.
+        bool can_manage_bots = false;
     };
     void to_json(json& j, const User& value);
     void from_json(const json& j, User& value);

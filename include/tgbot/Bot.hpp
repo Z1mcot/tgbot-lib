@@ -21,11 +21,12 @@ namespace TgBot {
     class Bot {
 
     public:
-        explicit Bot(std::string token, HttpClient &httpClient /*= _getDefaultHttpClient()*/, const std::string& url="https://api.telegram.org");
+        explicit Bot(std::string token, HttpClient &httpClient = _getDefaultHttpClient(), const std::string& url="https://api.telegram.org");
 
         /**
          * @return Token for accessing api.
          */
+        [[nodiscard]]
         inline const std::string& getToken() const {
             return token_;
         }
@@ -40,7 +41,7 @@ namespace TgBot {
         /**
          * @return Object which holds all event listeners.
          */
-        inline EventBroadcaster& getEvents() {
+        inline EventBroadcaster& getEvents() const {
             return *eventBroadcaster_;
         }
 
@@ -52,7 +53,7 @@ namespace TgBot {
         }
 
     private:
-        //static HttpClient &_getDefaultHttpClient();
+        static HttpClient &_getDefaultHttpClient();
 
         const std::string token_;
         Api api_;

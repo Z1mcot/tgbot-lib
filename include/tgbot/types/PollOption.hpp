@@ -9,6 +9,8 @@
 #include <nlohmann/json.hpp>
 #include <tgbot/types/TelegramModel.hpp>
 #include <tgbot/types/MessageEntity.hpp>
+#include <tgbot/types/User.hpp>
+#include <tgbot/types/Chat.hpp>
 
 namespace TgBot {
 
@@ -17,23 +19,39 @@ namespace TgBot {
     /**
      * This object contains information about one answer option in a poll.
      *
+     * @param persistent_id Unique identifier of the option, persistent on option addition and deletion
      * @param text Option text, 1-100 characters
-     * @param voter_count Number of users that voted for this option
+     * @param voter_count Number of users who voted for this option; may be 0 if unknown
      * @param text_entities Optional. Special entities that appear in the option text. Currently, only custom emoji entities are allowed in poll option texts
+     * @param added_by_user Optional. User who added the option; omitted if the option wasn't added by a user after poll creation
+     * @param added_by_chat Optional. Chat that added the option; omitted if the option wasn't added by a chat after poll creation
+     * @param addition_date Optional. Point in time (Unix timestamp) when the option was added; omitted if the option existed in the original poll
      */
     struct PollOption : public TelegramModel {
         typedef std::shared_ptr<PollOption> Ptr;
         typedef std::weak_ptr<PollOption> WeakPtr;
 
         virtual ~PollOption() = default;
+        // Unique identifier of the option, persistent on option addition and deletion
+        std::string persistent_id = "";
+
         // Option text, 1-100 characters
         std::string text = "";
 
-        // Number of users that voted for this option
+        // Number of users who voted for this option; may be 0 if unknown
         std::int64_t voter_count = 0;
 
         // Optional. Special entities that appear in the option text. Currently, only custom emoji entities are allowed in poll option texts
         std::vector<MessageEntity::Ptr> text_entities = std::vector<MessageEntity::Ptr>();
+
+        // Optional. User who added the option; omitted if the option wasn't added by a user after poll creation
+        User::Ptr added_by_user = nullptr;
+
+        // Optional. Chat that added the option; omitted if the option wasn't added by a chat after poll creation
+        Chat::Ptr added_by_chat = nullptr;
+
+        // Optional. Point in time (Unix timestamp) when the option was added; omitted if the option existed in the original poll
+        std::int64_t addition_date = 0;
     };
     void to_json(json& j, const PollOption& value);
     void from_json(const json& j, PollOption& value);

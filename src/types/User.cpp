@@ -46,6 +46,9 @@ namespace TgBot {
     if (value.allows_users_to_create_topics) { 
                     j["allows_users_to_create_topics"] = value.allows_users_to_create_topics; 
             }
+    if (value.can_manage_bots) { 
+                    j["can_manage_bots"] = value.can_manage_bots; 
+            }
     }
 
     void from_json(const json& j, User& value) {
@@ -93,6 +96,9 @@ namespace TgBot {
         }
         if (j.contains("allows_users_to_create_topics")) {
             j.at("allows_users_to_create_topics").get_to(value.allows_users_to_create_topics);
+        }
+        if (j.contains("can_manage_bots")) {
+            j.at("can_manage_bots").get_to(value.can_manage_bots);
         }
     }
 }

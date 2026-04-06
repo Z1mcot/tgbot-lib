@@ -19,6 +19,7 @@
 #include <tgbot/types/ChatJoinRequest.hpp>
 #include <tgbot/types/ChatBoostUpdated.hpp>
 #include <tgbot/types/ChatBoostRemoved.hpp>
+#include <tgbot/types/ManagedBotUpdated.hpp>
 #include <nlohmann/json.hpp>
 
 namespace TgBot {
@@ -94,6 +95,9 @@ namespace TgBot {
     if (value.removed_chat_boost) { 
                     j["removed_chat_boost"] = value.removed_chat_boost; 
             }
+    if (value.managed_bot) { 
+                    j["managed_bot"] = value.managed_bot; 
+            }
     }
 
     void from_json(const json& j, Update& value) {
@@ -168,6 +172,9 @@ namespace TgBot {
         }
         if (j.contains("removed_chat_boost")) {
             j.at("removed_chat_boost").get_to(value.removed_chat_boost);
+        }
+        if (j.contains("managed_bot")) {
+            j.at("managed_bot").get_to(value.managed_bot);
         }
     }
 }

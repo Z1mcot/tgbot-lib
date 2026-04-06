@@ -82,6 +82,8 @@ set(REQUEST_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/AnswerCallbackQueryRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/GetUserChatBoostsRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/GetBusinessConnectionRequest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/GetManagedBotTokenRequest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ReplaceManagedBotTokenRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SetMyCommandsRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DeleteMyCommandsRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/GetMyCommandsRequest.cpp
@@ -122,6 +124,9 @@ set(REQUEST_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/RepostStoryRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/EditStoryRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DeleteStoryRequest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/AnswerWebAppQueryRequest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SavePreparedInlineMessageRequest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SavePreparedKeyboardButtonRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/EditMessageTextRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/EditMessageCaptionRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/EditMessageMediaRequest.cpp
@@ -151,8 +156,6 @@ set(REQUEST_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/SetCustomEmojiStickerSetThumbnailRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DeleteStickerSetRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/AnswerInlineQueryRequest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/AnswerWebAppQueryRequest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/SavePreparedInlineMessageRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SendInvoiceRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/CreateInvoiceLinkRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/AnswerShippingQueryRequest.cpp

@@ -6,27 +6,19 @@
 
 namespace TgBot {
     namespace net {
+        LibCoroHttpClient::LibCoroHttpClient(std::string host)
+            : host_(std::move(host)), client_(host_) {
+        client_.set_connection_timeout(10);
+    }
 
-    LibCoroHttpClient::LibCoroHttpClient(std::shared_ptr<coro::thread_pool> tp, std::string host)
-            : thread_pool_(std::move(tp)), host_(std::move(host)) 
-    {}
-
-    coro::task<std::string> LibCoroHttpClient::makeRequest(HttpVerb verb, const std::string& target, const std::string& body, const std::string& contentType) {
-        // 1. Suspend the current coroutine and resume it on a background thread pool worker
-        co_await thread_pool_->schedule();
-
-        // 2. Perform the synchronous HTTPS request safely in the background
-        httplib::SSLClient cli(host_);
-        cli.set_connection_timeout(10); // 10 seconds timeout
-
+    coro::task<std::string> LibCoroHttpClient::makeRequest(const HttpVerb verb, const std::string& target, const std::string& body, const std::string& contentType) {
         httplib::Result res;
         if (verb == HttpVerb::POST) {
-            res = cli.Post(target.c_str(), body, contentType.c_str());
+            res = client_.Post(target, body, contentType);
         } else {
-            res = cli.Get(target.c_str());
+            res = client_.Get(target);
         }
 
-        // 3. Handle the result and return
         if (res && res->status == 200) {
             co_return res->body;
         } else if (res) {

@@ -60,7 +60,10 @@
 #include <tgbot/types/GiveawayCreated.hpp>
 #include <tgbot/types/Giveaway.hpp>
 #include <tgbot/types/GiveawayWinners.hpp>
+#include <tgbot/types/ManagedBotCreated.hpp>
 #include <tgbot/types/PaidMessagePriceChanged.hpp>
+#include <tgbot/types/PollOptionAdded.hpp>
+#include <tgbot/types/PollOptionDeleted.hpp>
 #include <tgbot/types/VideoChatScheduled.hpp>
 #include <tgbot/types/VideoChatEnded.hpp>
 #include <tgbot/types/VideoChatParticipantsInvited.hpp>
@@ -102,6 +105,7 @@ namespace TgBot {
      * @param quote Optional. For replies that quote part of the original message, the quoted part of the message
      * @param reply_to_story Optional. For replies to a story, the original story
      * @param reply_to_checklist_task_id Optional. Identifier of the specific checklist task that is being replied to
+     * @param reply_to_poll_option_id Optional. Persistent identifier of the specific poll option that is being replied to
      * @param via_bot Optional. Bot through which the message was sent
      * @param edit_date Optional. Date the message was last edited in Unix time
      * @param has_protected_content Optional. True, if the message can't be forwarded
@@ -177,7 +181,10 @@ namespace TgBot {
      * @param giveaway Optional. The message is a scheduled giveaway message
      * @param giveaway_winners Optional. A giveaway with public winners was completed
      * @param giveaway_completed Optional. Service message: a giveaway without public winners was completed
+     * @param managed_bot_created Optional. Service message: user created a bot that will be managed by the current bot
      * @param paid_message_price_changed Optional. Service message: the price for paid messages has changed in the chat
+     * @param poll_option_added Optional. Service message: answer option was added to a poll
+     * @param poll_option_deleted Optional. Service message: answer option was deleted from a poll
      * @param suggested_post_approved Optional. Service message: a suggested post was approved
      * @param suggested_post_approval_failed Optional. Service message: approval of a suggested post has failed
      * @param suggested_post_declined Optional. Service message: a suggested post was declined
@@ -251,6 +258,9 @@ namespace TgBot {
 
         // Optional. Identifier of the specific checklist task that is being replied to
         std::int64_t reply_to_checklist_task_id = 0;
+
+        // Optional. Persistent identifier of the specific poll option that is being replied to
+        std::string reply_to_poll_option_id = "";
 
         // Optional. Bot through which the message was sent
         User::Ptr via_bot = nullptr;
@@ -477,8 +487,17 @@ namespace TgBot {
         // Optional. Service message: a giveaway without public winners was completed
         std::shared_ptr<GiveawayCompleted> giveaway_completed = std::shared_ptr<GiveawayCompleted>();
 
+        // Optional. Service message: user created a bot that will be managed by the current bot
+        ManagedBotCreated::Ptr managed_bot_created = nullptr;
+
         // Optional. Service message: the price for paid messages has changed in the chat
         PaidMessagePriceChanged::Ptr paid_message_price_changed = nullptr;
+
+        // Optional. Service message: answer option was added to a poll
+        PollOptionAdded::Ptr poll_option_added = nullptr;
+
+        // Optional. Service message: answer option was deleted from a poll
+        PollOptionDeleted::Ptr poll_option_deleted = nullptr;
 
         // Optional. Service message: a suggested post was approved
         std::shared_ptr<SuggestedPostApproved> suggested_post_approved = std::shared_ptr<SuggestedPostApproved>();

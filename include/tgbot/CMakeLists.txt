@@ -9,10 +9,11 @@ add_subdirectory(tools)
 add_subdirectory(net)
 
 set(ROOT_HEADERS
-        EventBroadcaster.hpp
-        EventHandler.hpp
-        Bot.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/EventBroadcaster.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/EventHandler.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Bot.hpp
 )
 
 list(APPEND TGBOT_HEADERS ${ROOT_HEADERS})
 set(TGBOT_HEADERS "${TGBOT_HEADERS}" PARENT_SCOPE)
+
