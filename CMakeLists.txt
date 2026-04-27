@@ -40,7 +40,16 @@ add_subdirectory(include/tgbot)
 add_subdirectory(src)
 # Create library target
 add_library(tgbot-lib STATIC
-    ${TGBOT_SOURCES}
+        ${TGBOT_SOURCES}
+        ${TGBOT_HEADERS}
+)
+
+target_precompile_headers(tgbot-lib PRIVATE
+        <nlohmann/json.hpp>
+        <string>
+        <vector>
+        <memory>
+        <cstdint>
 )
 
 target_include_directories(tgbot-lib
@@ -83,4 +92,13 @@ install(EXPORT ${PROJECT_NAME}-targets
     FILE ${PROJECT_NAME}Config.cmake
     NAMESPACE ${PROJECT_NAME}::
     DESTINATION lib/cmake/${PROJECT_NAME}
+)
+
+add_executable(tgbot-test
+    tests/manual_test.cpp
+)
+
+target_link_libraries(tgbot-test PRIVATE
+    tgbot-lib
+    PkgConfig::libcoro
 )

@@ -12,7 +12,6 @@ namespace TgBot {
         : api_key_(std::move(api_key)), http_client_(http_client), url_(std::move(url)) {
     }
     template<typename T>
-
     T Api::parseResponse(const std::string& response_str) const {
         if (response_str.compare(0, 6, "<html>") == 0) {
             throw TgException("Received HTML response from Telegram API, likely an error page. Response: " + response_str, TgException::ErrorCode::HtmlResponse);
